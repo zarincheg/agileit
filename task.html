@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Giggle dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/giggle.css" rel="stylesheet" media="screen">
+
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+        <ul class="nav">
+          <li><a href="/">Dashboard</a></li>
+          <li><a href="#">Project tree</a></li>
+          <li><a href="/backlog.html">Backlog</a></li>
+          <li><a href="/stream.html">Stream</a></li>
+        </ul>
+      </div>
+      </div>
+    </div>
+    <div class="container main">
+      <div class="row-fluid">
+        <div class="span9">
+          <div class="row-fluid">
+            <div class="span2">
+              <h2>Task</h2>
+            </div>
+            <div class="span8 task-action">
+              <div class="input-prepend">
+                <button class="btn btn-success" type="button">Close</button>
+                <button class="btn btn-primary" type="button">Assign</button>
+                <span class="add-on">to</span>
+                <input class="input-large" id="appendedInputButton" type="text">
+              </div>
+            </div>
+          </div>
+          <h4>Example task(bug or feature)</h4>
+          <p>Lorem ipsum dolor sit amet
+            Consectetur adipiscing elit
+            Integer molestie lorem at massa
+            Facilisis in pretium nisl aliquet
+            Nulla volutpat aliquam velit
+            Phasellus iaculis neque
+            Purus sodales ultricies
+            Vestibulum laoreet porttitor sem
+            Ac tristique libero volutpat at
+            Faucibus porta lacus fringilla vel
+            Aenean sit amet erat nunc
+            Eget porttitor lorem</p>
+          <div class="task-labels">
+            <span class="label label-info">Branch</span>
+            <span class="label label-inverse">Kirill Zorin</span>
+          </div>
+          <form action="" method="post">
+            <textarea name="details" class="stream" rows="8"></textarea>
+            <input type="submit" class="btn btn-primary" value="Comment">
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

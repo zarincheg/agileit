@@ -1,6 +1,10 @@
 .container-fluid {
-	margin: 0 auto;
+	margin: 5% auto;
 	max-width: 90%;
+}
+
+.main {
+	margin-top: 5%;
 }
 
 span.badge {
@@ -20,4 +24,12 @@ textarea.stream {
 
 dt {
 	margin-top: 5pt;
+}
+
+div.task-action {
+	padding-top: 11pt;
+}
+
+div.task-labels {
+	padding: 5pt 0 5pt 0;
 }

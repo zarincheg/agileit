@@ -10,14 +10,16 @@
     <script src="js/bootstrap.min.js"></script>
   </head>
   <body>
-    <div class="navbar">
+    <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
+        <div class="container">
         <ul class="nav">
           <li class="active"><a href="/">Dashboard</a></li>
           <li><a href="#">Project tree</a></li>
           <li><a href="/backlog.html">Backlog</a></li>
           <li><a href="/stream.html">Stream</a></li>
         </ul>
+      </div>
       </div>
     </div>
     <div class="container-fluid">
@@ -28,8 +30,10 @@
           <form action="" method="post">
             <input class="input-xlarge" id="appendedInputButtons" type="text" name="bug">
             <button class="btn" type="button">Add</button>
-            <button class="btn" type="button">Details</button>
-            <textarea name="details" class="input-xlarge details" rows="5"></textarea>
+            <button class="btn" type="button" data-toggle="collapse" data-target="#bug-detail">Details</button>
+            <div id="bug-detail" class="collapse">
+              <textarea name="details" class="input-xlarge details" rows="5"></textarea>
+            </div>
           </form>
           </div>
           <ol>
@@ -37,7 +41,7 @@
             <li>Any Bug/Task</li>
             <li>Any Bug/Task</li>
             <li>
-              <a href="#">Any Bug/Task</a>
+              <a href="/task.html">Any Bug/Task</a>
               <span class="badge badge-success">C</span>
             </li>
             <li>
@@ -54,10 +58,12 @@
           <h2>Features</h2>
           <form action="" method="post">
           <div class="input-append">
-            <input class="input-xlarge" id="appendedInputButtons" type="text" name="task">
+            <input class="input-xlarge" id="appendedInputButtons" type="text" name="feature">
             <button class="btn" type="button">Add</button>
-            <button class="btn" type="button">Details</button>
-            <textarea name="details" class="input-xlarge details" rows="5"></textarea>
+            <button class="btn" type="button" data-toggle="collapse" data-target="#feature-detail">Details</button>
+            <div id="feature-detail" class="collapse">
+              <textarea name="details" class="input-xlarge details" rows="5"></textarea>
+            </div>
           </div>
           </form>
           <ol>
