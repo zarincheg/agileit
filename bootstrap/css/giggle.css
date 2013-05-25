@@ -11,8 +11,13 @@
 	display: inline;
 }
 
-span.badge {
-	margin-left: 5pt;
+form.new-build .input-xlarge {
+	width: 95%;
+}
+
+form.new-build select.input-xlarge {
+	width: 98%;
+	height: 220pt;
 }
 
 div.badge-empty {
@@ -53,4 +58,14 @@ div.task-action {
 
 div.task-labels {
 	padding: 5pt 0 5pt 0;
+}
+
+.wide-item li {
+	padding: 2pt 0 2pt 0;
+	vertical-align: middle;
+}
+
+.state-content {
+	border-bottom: 1pt solid #ddd;
+	padding-bottom: 10pt;
 }

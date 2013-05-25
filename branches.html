@@ -24,9 +24,9 @@
     </div>
     <div class="container-fluid">
       <div class="row-fluid">
-        <div class="span3">
+        <div class="span3 branch-list">
           <h2>List</h2>
-          <ul class="unstyled">
+          <ul class="unstyled wide-item">
             <li>patch-pass-retrive</li>
             <li>patch-site-pages</li>
             <li><div class="badge-empty badge-success li-before"></div>stable</li>
@@ -56,9 +56,9 @@
               <li><a href="#tab3" data-toggle="tab">Feature testing</a></li>
               <li><a href="#tab4" data-toggle="tab">Builds</a></li>
             </ul>
-            <div class="tab-content">
+            <div class="tab-content state-content">
               <div class="tab-pane active" id="tab1">
-                <ol>
+                <ol class="wide-item">
                   <li>Any Bug/Task</li>
                   <li>
                     <a data-toggle="collapse" href="#branch">patch-site-pages</a>
@@ -93,7 +93,7 @@
                     <a href="#">Not merged</a>
                   </li>
                 </ul>
-                <ol>
+                <ol class="wide-item">
                   <li>Any Bug/Task</li>
                   <li>
                     <a href="#">Any Bug/Task</a>
@@ -122,7 +122,7 @@
                     <a href="#">Not merged</a>
                   </li>
                 </ul>
-                <ol>
+                <ol class="wide-item">
                   <li>Any Bug/Task</li>
                   <li>
                     <a href="#">Any Bug/Task</a>
@@ -204,11 +204,23 @@
         <h3>New build</h3>
       </div>
       <div class="modal-body">
-        <p>One fine body…</p>
+        <form action="" method="post" class="new-build">
+          <div>
+            <input type="text" name="buildName" class="input-xlarge" placeholder="Name">
+          </div>
+          <div>
+            <select multiple="multiple" class="input-xlarge">
+              <option>patch-pass-retrive</option>
+              <option>remotes/origin/10237_fast_audit</option>
+              <option>remotes/origin/405_concurrents</option>
+              <option>remotes/origin/437_profVersionFixes</option>
+            </select>
+          </div>
+        </form>
       </div>
       <div class="modal-footer">
-        <a href="#" class="btn">Close</a>
-        <a href="#" class="btn btn-primary">Save changes</a>
+        <a href="#" class="btn">Cancel</a>
+        <a href="#" class="btn btn-inverse">Create</a>
       </div>
     </div>
 
@@ -218,11 +230,20 @@
         <h3>Adding branches</h3>
       </div>
       <div class="modal-body">
-        <p>One fine body…</p>
+        <form action="" method="post" class="new-build">
+          <div>
+            <select multiple="multiple" class="input-xlarge">
+              <option>patch-pass-retrive</option>
+              <option>remotes/origin/10237_fast_audit</option>
+              <option>remotes/origin/405_concurrents</option>
+              <option>remotes/origin/437_profVersionFixes</option>
+            </select>
+          </div>
+        </form>
       </div>
       <div class="modal-footer">
         <a href="#" class="btn">Close</a>
-        <a href="#" class="btn btn-primary">Save changes</a>
+        <a href="#" class="btn btn-inverse">Add</a>
       </div>
     </div>
   </body>
