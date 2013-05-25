@@ -12,3 +12,12 @@ textarea.details {
 	margin-top: 5pt;
 	width: 291pt;
 }
+
+textarea.stream {
+	display: block;
+	width: 510pt;
+}
+
+dt {
+	margin-top: 5pt;
+}
