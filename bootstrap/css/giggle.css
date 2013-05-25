@@ -7,8 +7,29 @@
 	margin-top: 5%;
 }
 
+.inline {
+	display: inline;
+}
+
 span.badge {
 	margin-left: 5pt;
+}
+
+div.badge-empty {
+	display: inline;
+	padding-right: 9px;
+	  padding-left: 7px;
+	  -webkit-border-radius: 9px;
+	     -moz-border-radius: 9px;
+	          border-radius: 9px;
+}
+
+div.li-before {
+	margin-right: 3pt;
+}
+
+div.li-after {
+	margin-left: 3pt;
 }
 
 textarea.details {
