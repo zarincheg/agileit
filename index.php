@@ -33,5 +33,19 @@ Flight::route('POST /dashboard/add/@type', function($type) {
 	Flight::json(['success' => true]);
 });
 
+Flight::route('GET /branches', function() {
+	Flight::render('branches', null, 'content');
+	Flight::render('root');
+});
+
+Flight::route('GET /backlog', function() {
+	Flight::render('backlog', null, 'content');
+	Flight::render('root');
+});
+
+Flight::route('GET /stream', function() {
+	Flight::render('stream', null, 'content');
+	Flight::render('root');
+});
 
 Flight::start();
