@@ -69,3 +69,13 @@ div.task-labels {
 	border-bottom: 1pt solid #ddd;
 	padding-bottom: 10pt;
 }
+
+.alert-holder {
+	position: absolute;
+	top: 10%;
+	right: 1%;
+}
+
+.small {
+	font-size: 85%;
+}
