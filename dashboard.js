@@ -9,14 +9,14 @@ $(function() {
 	 * Добавляем запись о новом баге.
 	 */
 	$('#addBugForm').submit(function() {
-		bugName = $('#addBugForm>input[name=bug]').val();
+		bugName = $('#addBugForm>input[name=name]').val();
 		
 		if(!bugName)
 			return false;
 
 		$.ajax({
 			type: "POST",
-			url: '/rest.php',
+			url: '/dashboard/add/bug',
 			data: $('#addBugForm').serialize(),
 			dataType: 'json',
 			success: function(data, textStatus) {
@@ -35,14 +35,14 @@ $(function() {
 	 * Добавляем задачу для нового функционала
 	 */
 	$('#addFeatureForm').submit(function() {
-		featureName = $('#addFeatureForm>input[name=feature]').val();
+		featureName = $('#addFeatureForm>input[name=name]').val();
 
 		if(!featureName)
 			return false;
 
 		$.ajax({
 			type: "POST",
-			url: '/rest.php',
+			url: '/dashboard/add/feature',
 			data: $('#addFeatureForm').serialize(),
 			dataType: 'json',
 			success: function(data, textStatus) {
