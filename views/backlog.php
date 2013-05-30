@@ -8,11 +8,15 @@
             </form>
           </div>
           <ol class="wide-item" id="backlog">
-            <?php while($backlog->hasNext()) {?>
-              <li>
-                <span><?= $backlog->getNext()['text'] ?></span>
-                <a href="#"><i class="icon-remove"></a></i>
-                <a href="#"><i class="icon-thumbs-up"></a></i>
+            <?php while($backlog->hasNext()) {
+              $item = $backlog->getNext();
+            ?>
+              <li data-rating="<?= $item['rating'] ?>" data-id="<?= $item['_id'] ?>">
+                <span><?= $item['text'] ?></span>
+                <a href="#"><i class="icon-remove"></i></a>
+                <a href="#" onclick="backlogUp(this)">
+                  <i class="icon-thumbs-up"></i>
+                </a>
               </li>
             <? } ?>
           </ol>
@@ -24,6 +28,6 @@
       <li>
         <span></span>
         <a href="#"><i class="icon-remove"></a></i>
-        <a href="#"><i class="icon-thumbs-up"></a></i>
+        <a href="/backlog/up/"><i class="icon-thumbs-up"></a></i>
       </li>
     </script>

@@ -4,6 +4,34 @@ function insertRecord(selector, record) {
 	backlogItem.prependTo(selector);
 }
 
+function backlogUp(a) {
+	var el = $(a).parent();
+	var id = el.attr('data-id');
+	var currRating = el.attr('data-rating');
+	var prevRating = el.prev().attr('data-rating');
+
+	$.ajax({
+		type: "GET",
+		url: '/backlog/up/' + id,
+		dataType: 'json',
+		success: function(data, textStatus) {
+			showAlert('success', textStatus);
+			
+			if(++currRating >= prevRating) {
+				var clone = el.clone();
+				clone.attr('data-rating', currRating);
+				clone.insertBefore(el.prev());
+				el.remove();
+			} else {
+				el.attr('data-rating', currRating);
+			}
+		},
+		error: function(xhr, textStatus, error) {
+			showAlert('error', error);
+		}
+	});
+}
+
 $(function() {
 	/**
 	 * Добавляем запись в беклог

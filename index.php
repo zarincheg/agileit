@@ -68,7 +68,7 @@ Flight::route('GET /branches', function() {
 
 Flight::route('GET /backlog', function() {
 	$mongo = new MongoClient();
-	$backlog = $mongo->agilit->backlog->find()->sort(['rating' => 1]);
+	$backlog = $mongo->agilit->backlog->find()->sort(['rating' => -1]);
 	Flight::render('backlog', ['backlog' => $backlog], 'content');
 	Flight::render('root');
 });
@@ -81,6 +81,13 @@ Flight::route('POST /backlog/add', function() {
 	]);
 	
 	Flight::json(['success' => true, 'text' => $_POST['record']]);
+});
+
+Flight::route('GET /backlog/up/@id', function($id) {
+	$mongo = new MongoClient();
+	$backlog = $mongo->agilit->backlog->update(['_id' => new MongoId($id)],
+											   ['$inc' => ['rating' => 1]]);
+	Flight::json(['success' => true]);
 });
 
 Flight::route('GET /stream', function() {
