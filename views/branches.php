@@ -1,32 +1,10 @@
-    <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span3 branch-list">
-          <h2>List</h2>
-          <ul class="unstyled wide-item">
-            <li>patch-pass-retrive</li>
-            <li>patch-site-pages</li>
-            <li><div class="badge-empty badge-success li-before"></div>stable</li>
-            <li>remotes/origin/10237_fast_audit</li>
-            <li>remotes/origin/405_concurrents</li>
-            <li>remotes/origin/437_profVersionFixes</li>
-            <li>remotes/origin/HEAD -> origin/master</li>
-            <li>remotes/origin/bindingID</li>
-            <li>remotes/origin/build_05</li>
-            <li>remotes/origin/feature-testing</li>
-            <li>remotes/origin/fix-fastaudit-generation</li>
-            <li>remotes/origin/fix-mailing-markup</li>
-            <li>remotes/origin/fix-testing</li>
-            <li>remotes/origin/master</li>
-            <li>remotes/origin/patch-site-pages</li>
-            <li>remotes/origin/patch-user-project-add</li>
-            <li>remotes/origin/stable</li>
-          </ul>
-        </div>
-        <div class="span6">
-          <h2>State</h2>
+    <div class="container main">
+      <div class="row">
+        <div class="span8">
           
           <div class="tabbable"> <!-- Only required for left/right tabs -->
             <ul class="nav nav-tabs">
+              <li><a href="#tab5" data-toggle="tab">List</a></li>
               <li class="active"><a href="#tab1" data-toggle="tab">Review</a></li>
               <li><a href="#tab2" data-toggle="tab">Fix testing</a></li>
               <li><a href="#tab3" data-toggle="tab">Feature testing</a></li>
@@ -118,7 +96,6 @@
                   <li>Any Bug/Task</li>
                 </ol>
               </div>
-              
               <div class="tab-pane" id="tab4">
                 
                 <div class="accordion" id="accordion2">
@@ -165,6 +142,27 @@
 
                 <a href="#newBuild" role="button" class="btn btn-inverse" data-toggle="modal">Create build</a>
                  
+              </div>
+              <div class="tab-pane" id="tab5">
+                <ul class="unstyled wide-item">
+                  <li>patch-pass-retrive</li>
+                  <li>patch-site-pages</li>
+                  <li><div class="badge-empty badge-success li-before"></div>stable</li>
+                  <li>remotes/origin/10237_fast_audit</li>
+                  <li>remotes/origin/405_concurrents</li>
+                  <li>remotes/origin/437_profVersionFixes</li>
+                  <li>remotes/origin/HEAD -> origin/master</li>
+                  <li>remotes/origin/bindingID</li>
+                  <li>remotes/origin/build_05</li>
+                  <li>remotes/origin/feature-testing</li>
+                  <li>remotes/origin/fix-fastaudit-generation</li>
+                  <li>remotes/origin/fix-mailing-markup</li>
+                  <li>remotes/origin/fix-testing</li>
+                  <li>remotes/origin/master</li>
+                  <li>remotes/origin/patch-site-pages</li>
+                  <li>remotes/origin/patch-user-project-add</li>
+                  <li>remotes/origin/stable</li>
+                </ul>
               </div>
 
 

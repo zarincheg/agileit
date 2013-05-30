@@ -15,8 +15,8 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-        <ul class="nav">
-          <li class="active"><a href="/dashboard">Dashboard</a></li>
+        <ul class="nav main-nav">
+          <li><a href="/dashboard">Dashboard</a></li>
           <li><a href="/branches">Branches</a></li>
           <li><a href="/backlog">Backlog</a></li>
           <li><a href="/stream">Stream</a></li>

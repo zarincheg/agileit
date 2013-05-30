@@ -1,7 +1,6 @@
     <div class="container main">
       <div class="row-fluid">
         <div class="span9">
-          <h2>Backlog</h2>
           <div class="input-append">
           <form action="" method="post">
             <input class="input-xxlarge" id="appendedInputButtons" type="text" name="bug">
