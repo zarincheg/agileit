@@ -10,6 +10,7 @@
     <script src="/js/bootstrap.min.js"></script>
     <script src="/main.js"></script>
     <script src="/dashboard.js"></script>
+    <script src="/backlog.js"></script>
   </head>
   <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
