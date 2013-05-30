@@ -21,7 +21,7 @@ $(function() {
 			dataType: 'json',
 			success: function(data, textStatus) {
 				showAlert('success', textStatus);
-				insertTaskTo('#bug-list', bugName, 123);
+				insertTaskTo('#bug-list', bugName, data.taskId);
 			},
 			error: function(xhr, textStatus, error) {
 				showAlert('error', error);
@@ -47,7 +47,7 @@ $(function() {
 			dataType: 'json',
 			success: function(data, textStatus) {
 				showAlert('success', textStatus);
-				insertTaskTo('#feature-list', featureName, 567);
+				insertTaskTo('#feature-list', featureName, data.taskId);
 			},
 			error: function(xhr, textStatus, error) {
 				showAlert('error', error);

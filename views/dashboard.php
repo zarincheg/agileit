@@ -15,7 +15,7 @@
           <ol class="wide-item" id="bug-list">
             <? foreach($bugs as $bug) { ?>
             <li>
-              <a href="#"><?= $bug['name'] ?></a>
+              <a href="/task/<?= $bug['_id'] ?>"><?= $bug['name'] ?></a>
               <span class="badge badge-<?= $bug['status'] ?>"><?= $bug['status'] ?></span>
             </li>
             <? } ?>
@@ -36,7 +36,7 @@
           <ol class="wide-item" id="feature-list">
             <? foreach($features as $feature) { ?>
             <li>
-              <a href="#"><?= $feature['name'] ?></a>
+              <a href="/task/<?= $feature['_id'] ?>"><?= $feature['name'] ?></a>
               <span class="badge badge-<?= $feature['status'] ?>"><?= $feature['status'] ?></span>
             </li>
             <? } ?>
