@@ -5,3 +5,7 @@ function showAlert(type, message) {
 	alert.addClass('in');
 	window.setTimeout(function(){alert.alert('close')}, 2000);
 }
+
+$(function() {
+	$('ul.main-nav a[href="'+location.pathname+'"]').parent().addClass('active');
+});
