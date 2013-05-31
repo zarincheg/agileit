@@ -11,6 +11,7 @@
     <script src="/main.js"></script>
     <script src="/dashboard.js"></script>
     <script src="/backlog.js"></script>
+    <script src="/stream.js"></script>
   </head>
   <body>
     <div class="navbar navbar-inverse navbar-fixed-top">

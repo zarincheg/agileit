@@ -3,7 +3,7 @@ function insertNote(selector, note) {
 	noteItem.children('dd>span').text(note.text);
 	noteItem.children('dt>span').text(note.author);
 	noteItem.children('dt>em').text(note.date);
-	noteItem.appendTo(selector);
+	noteItem.prependTo(selector);
 }
 
 $(function() {
@@ -11,15 +11,15 @@ $(function() {
 	 * Добавляем запись в поток мыслей
 	 */
 	$('#addNoteForm').submit(function() {
-		Note = $('#addNoteForm :input[name=note]').val();
-		
-		if(!Note) {
+		var note = $('#addNoteForm :input[name=note]').val();
+
+		if(!note) {
 			return false;
 		}
 
 		$.ajax({
 			type: "POST",
-			url: '/rest.php',
+			url: $('#addNoteForm').attr('action'),
 			data: $('#addNoteForm').serialize(),
 			dataType: 'json',
 			success: function(data, textStatus) {

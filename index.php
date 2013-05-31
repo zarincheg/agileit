@@ -100,8 +100,24 @@ Flight::route('GET /backlog/up/@id', function($id) {
 });
 
 Flight::route('GET /stream', function() {
-	Flight::render('stream', null, 'content');
+	$mongo = new MongoClient();
+	$stream = $mongo->agilit->stream->find()->sort(['date' => -1]);
+
+	Flight::render('stream', ['stream' => $stream], 'content');
 	Flight::render('root');
+});
+
+Flight::route('POST /stream/add', function() {
+	$mongo = new MongoClient();
+	$mongo->agilit->stream->insert([
+		'text' => $_POST['note'],
+		'author' => 'Kirill Zorin',
+		'date' => new MongoDate(time())
+	]);
+	
+	Flight::json(['success' => true, 'text' => $_POST['note'],
+									 'author' => 'Kirill Zorin',
+									 'date' => date("d-m-Y H:i")]);
 });
 
 Flight::start();
