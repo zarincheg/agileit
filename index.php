@@ -83,6 +83,15 @@ Flight::route('POST /backlog/add', function() {
 	Flight::json(['success' => true, 'text' => $_POST['record']]);
 });
 
+Flight::route('GET /backlog/remove/@id', function($id) {
+	$mongo = new MongoClient();
+	$mongo->agilit->backlog->remove([
+		'_id' => new MongoId($id)
+	]);
+	
+	Flight::json(['success' => true]);
+});
+
 Flight::route('GET /backlog/up/@id', function($id) {
 	$mongo = new MongoClient();
 	$backlog = $mongo->agilit->backlog->update(['_id' => new MongoId($id)],

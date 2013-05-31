@@ -95,3 +95,11 @@ div.task-labels {
 .badge-close[href] {
   background-color: #356635;
 }
+
+.confirm-buttons {
+	margin-top: 5pt;
+}
+
+.icon-remove {
+	cursor: pointer;
+}

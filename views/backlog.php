@@ -13,7 +13,7 @@
             ?>
               <li data-rating="<?= $item['rating'] ?>" data-id="<?= $item['_id'] ?>">
                 <span><?= $item['text'] ?></span>
-                <a href="#"><i class="icon-remove"></i></a>
+                <i class="icon-remove"></i>
                 <a href="#" onclick="backlogUp(this)">
                   <i class="icon-thumbs-up"></i>
                 </a>
@@ -27,7 +27,19 @@
     <script type="text/template" id="backlog-item">
       <li>
         <span></span>
-        <a href="#"><i class="icon-remove"></a></i>
+        <i class="icon-remove"></a>
         <a href="/backlog/up/"><i class="icon-thumbs-up"></a></i>
       </li>
+    </script>
+
+    <script type="text/template" id="confirm-remove">
+      <div class="alert alert-error fade">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <h4 class="alert-heading">Remove confirmation</h4>
+        <p>Are you sure want to remove backlog item?</p>
+        <p class="confirm-buttons">
+          <a class="btn btn-danger" href="#">Yes</a>
+          <a class="btn btn-cancel" href="#">No</a>
+        </p>
+      </div>
     </script>
