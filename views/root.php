@@ -17,6 +17,9 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
+          <a href="/settings" class="pull-right">
+            <img src="/img/settings_1.png" class="img-circle" style="height: 30pt; width: 30pt;">
+          </a>
         <ul class="nav main-nav">
           <li><a href="/dashboard">Dashboard</a></li>
           <li><a href="/branches">Branches</a></li>

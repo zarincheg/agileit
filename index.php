@@ -62,7 +62,10 @@ Flight::route('GET /task/@id', function($id) {
 });
 
 Flight::route('GET /branches', function() {
-	Flight::render('branches', null, 'content');
+	preg_match_all("!.*?origin/(.*?)\n!", `git branch -r`, $list);
+	sort($list[1]);
+
+	Flight::render('branches', ['list' => $list[1]], 'content');
 	Flight::render('root');
 });
 
@@ -118,6 +121,11 @@ Flight::route('POST /stream/add', function() {
 	Flight::json(['success' => true, 'text' => $_POST['note'],
 									 'author' => 'Kirill Zorin',
 									 'date' => date("d-m-Y H:i")]);
+});
+
+Flight::route('GET /settings', function() {
+	Flight::render('settings', null, 'content');
+	Flight::render('root');
 });
 
 Flight::start();
