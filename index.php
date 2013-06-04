@@ -97,8 +97,8 @@ Flight::route('GET /backlog/remove/@id', function($id) {
 
 Flight::route('GET /backlog/up/@id', function($id) {
 	$mongo = new MongoClient();
-	$backlog = $mongo->agilit->backlog->update(['_id' => new MongoId($id)],
-											   ['$inc' => ['rating' => 1]]);
+	$mongo->agilit->backlog->update(['_id' => new MongoId($id)],
+									['$inc' => ['rating' => 1]]);
 	Flight::json(['success' => true]);
 });
 
@@ -124,8 +124,22 @@ Flight::route('POST /stream/add', function() {
 });
 
 Flight::route('GET /settings', function() {
-	Flight::render('settings', null, 'content');
+	$mongo = new MongoClient();
+	$settings = $mongo->agilit->settings->findOne(['project' => '35cm']);
+
+	Flight::render('settings', ['settings' => $settings], 'content');
 	Flight::render('root');
+});
+
+Flight::route('POST /settings', function() {
+	$mongo = new MongoClient();
+	$mongo->agilit->settings->update(['project' => '35cm'],
+									 ['project' => '35cm',
+									  'repoPath' => $_POST['repo'], 
+									  'clonePath' => $_POST['path']],
+									 ['upsert' => true]);
+
+	Flight::json(['success' => true]);
 });
 
 Flight::start();

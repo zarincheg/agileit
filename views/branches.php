@@ -11,6 +11,15 @@
               <li><a href="#tab4" data-toggle="tab">Builds</a></li>
             </ul>
             <div class="tab-content state-content">
+              <div class="tab-pane" id="tab5">
+                <ul class="unstyled wide-item">
+                  <? foreach ($list as $branch) { ?>
+                  <li><?= $branch ?></li>
+                  <? } ?>
+                  <li><div class="badge-empty badge-success li-before"></div>stable</li>
+                </ul>
+              </div>
+
               <div class="tab-pane active" id="tab1">
                 <ol class="wide-item">
                   <li>Any Bug/Task</li>
@@ -143,28 +152,6 @@
                 <a href="#newBuild" role="button" class="btn btn-inverse" data-toggle="modal">Create build</a>
                  
               </div>
-              <div class="tab-pane" id="tab5">
-                <ul class="unstyled wide-item">
-                  <li>patch-pass-retrive</li>
-                  <li>patch-site-pages</li>
-                  <li><div class="badge-empty badge-success li-before"></div>stable</li>
-                  <li>remotes/origin/10237_fast_audit</li>
-                  <li>remotes/origin/405_concurrents</li>
-                  <li>remotes/origin/437_profVersionFixes</li>
-                  <li>remotes/origin/HEAD -> origin/master</li>
-                  <li>remotes/origin/bindingID</li>
-                  <li>remotes/origin/build_05</li>
-                  <li>remotes/origin/feature-testing</li>
-                  <li>remotes/origin/fix-fastaudit-generation</li>
-                  <li>remotes/origin/fix-mailing-markup</li>
-                  <li>remotes/origin/fix-testing</li>
-                  <li>remotes/origin/master</li>
-                  <li>remotes/origin/patch-site-pages</li>
-                  <li>remotes/origin/patch-user-project-add</li>
-                  <li>remotes/origin/stable</li>
-                </ul>
-              </div>
-
 
             </div>
           </div>
