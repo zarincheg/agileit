@@ -8,12 +8,12 @@
 
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-    <script src="/main.js"></script>
-    <script src="/dashboard.js"></script>
-    <script src="/backlog.js"></script>
-    <script src="/stream.js"></script>
-    <script src="/settings.js"></script>
-    <script src="/task.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/dashboard.js"></script>
+    <script src="/js/backlog.js"></script>
+    <script src="/js/stream.js"></script>
+    <script src="/js/settings.js"></script>
+    <script src="/js/task.js"></script>
   </head>
   <body>
     <div class="navbar navbar-inverse navbar-fixed-top">

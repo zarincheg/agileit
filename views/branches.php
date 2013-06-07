@@ -6,8 +6,8 @@
             <ul class="nav nav-tabs">
               <li><a href="#tab5" data-toggle="tab">List</a></li>
               <li class="active"><a href="#tab1" data-toggle="tab">Review</a></li>
-              <li><a href="#tab2" data-toggle="tab">Fix testing</a></li>
-              <li><a href="#tab3" data-toggle="tab">Feature testing</a></li>
+              <li><a href="#tab2" data-toggle="tab">Bugfix</a></li>
+              <li><a href="#tab3" data-toggle="tab">Feature</a></li>
               <li><a href="#tab4" data-toggle="tab">Builds</a></li>
             </ul>
             <div class="tab-content state-content">
