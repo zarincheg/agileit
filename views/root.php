@@ -13,6 +13,7 @@
     <script src="/backlog.js"></script>
     <script src="/stream.js"></script>
     <script src="/settings.js"></script>
+    <script src="/task.js"></script>
   </head>
   <body>
     <div class="navbar navbar-inverse navbar-fixed-top">

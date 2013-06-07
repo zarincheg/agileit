@@ -6,8 +6,14 @@
           <h2>Task</h2>
         </div>
         <div class="span8 task-action">
-          <div class="input-prepend">
+          <div class="input-prepend" id="task-actions" data-task-id="<?= $_id ?>" data-task-status="<?= $status ?>">
+            
+            <? if($status == 'open') { ?>
             <button class="btn btn-success" type="button">Close</button>
+            <? } elseif($status == 'close') {?>
+            <button class="btn btn-danger" type="button">Open</button>
+            <? } ?>
+
             <button class="btn btn-primary" type="button">Assign</button>
             <span class="add-on">to</span>
             <input class="input-large" id="appendedInputButton" type="text">

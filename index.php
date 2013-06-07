@@ -61,6 +61,22 @@ Flight::route('GET /task/@id', function($id) {
 	Flight::render('root');
 });
 
+Flight::route('PUT /task/@id/close', function($id) {
+	$mongo = new MongoClient();
+	$task = $mongo->agilit->tasks->update(['_id' => $id],
+										  ['$set' => ['status' => 'close']]);
+
+	Flight::json(['success' => true, 'taskId' => $id]);
+});
+
+Flight::route('PUT /task/@id/open', function($id) {
+	$mongo = new MongoClient();
+	$task = $mongo->agilit->tasks->update(['_id' => $id],
+										  ['$set' => ['status' => 'open']]);
+
+	Flight::json(['success' => true, 'taskId' => $id]);
+});
+
 Flight::route('GET /branches', function() {
 	preg_match_all("!.*?origin/(.*?)\n!", `git branch -r`, $list);
 	sort($list[1]);
