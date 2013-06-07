@@ -33,3 +33,4 @@
     </div>
   </div>
 </div>
+<script src="/js/task.js"></script>

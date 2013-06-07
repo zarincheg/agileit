@@ -100,6 +100,7 @@ div.task-labels {
 	margin-top: 5pt;
 }
 
-.icon-remove {
+.icon-remove,
+.icon-thumbs-up {
 	cursor: pointer;
 }
