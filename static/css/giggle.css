@@ -3,8 +3,16 @@
 	max-width: 90%;
 }
 
+.navbar-fixed-top .container {
+	width: 90%;
+}
+
 .main {
 	margin-top: 5%;
+}
+
+span.brand {
+	margin-right: 10pt;
 }
 
 .inline {

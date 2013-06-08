@@ -1,6 +1,7 @@
 <?php
 
 require 'flight/flight/Flight.php';
+require 'Mail.php';
 
 Flight::map('translit', function($str) {
     $tr = array(
@@ -154,6 +155,50 @@ Flight::route('POST /settings', function() {
 									  'repoPath' => $_POST['repo'], 
 									  'clonePath' => $_POST['path']],
 									 ['upsert' => true]);
+
+	Flight::json(['success' => true]);
+});
+
+Flight::route('GET /authorization', function() {
+	Flight::render('authorization');
+});
+
+// @todo Сделать запоминание авторизации через авторизационный ключ в куках
+Flight::route('POST /authorization', function() {
+	$mongo = new MongoClient();
+	$email =filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+	
+	if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+		Flight::halt(406, 'Email address is not valid!');
+	}
+
+	$user = $mongo->agilit->users->findOne(['email' => $email]);
+	
+	if(!$user) {
+		// Парль отсылается только в случае, если он генерируется системой. Иначе есть опасность отослать вредные данные пользователю.
+		if(!$_POST['password']) {
+			$bytes = openssl_random_pseudo_bytes(rand(4, 12));
+			$password = bin2hex($bytes);
+			$message = "Welcome to AgileIT!<br>Your password: ".$password;
+		} else {
+			$password = $_POST['password'];
+			$message = "Welcome to AgileIT!";
+		}
+
+		$hash = md5($password);
+		$mongo->agilit->users->insert(['email' => $email,
+									   'password' => $hash]);
+
+		$mail = new Mail('bot@agileit.ru');
+		$mail->send($email, 'Agile IT! - Successful registration', $message);
+	} else {
+		if(md5($_POST['password']) !== $user['password']) {
+			Flight::halt(403, 'Incorrect password!');
+		}
+	}
+
+	session_start();
+	$_SESSION['user'] = $user;
 
 	Flight::json(['success' => true]);
 });
