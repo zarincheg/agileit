@@ -27,13 +27,16 @@
           </ul>
 
           <ul class="nav pull-right">
-            <li class="navbar-text">Kirill Zorin</li>
+            <li class="navbar-text"><?= $_SESSION['user']['name'] ?> <?= $_SESSION['user']['lastname'] ?></li>
             <li class="divider-vertical"></li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">35cm</a></li>
-                <li><a href="#">Agileit</a></li>
+              <a href="#" class="dropdown-toggle" id="project-toggle" data-toggle="dropdown"><span>Projects</span> <b class="caret"></b></a>
+              <ul class="dropdown-menu" id="projects-list">
+                <? foreach($_SESSION['user']['projects'] as $project) { 
+                  $current = $project['current'] ? 'selected' : '';
+                  ?>
+                <li class="<?= $current ?>" data-project-name="<?= $project['name'] ?>"><a href="/dashboard/select/<?= $project['name'] ?>"><?= $project['title'] ?></a></li>
+                <? } ?>
                 <li class="divider"></li>
                 <li><a href="#">New project</a></li>
               </ul>

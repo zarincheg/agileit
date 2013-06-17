@@ -8,4 +8,6 @@ function showAlert(type, message) {
 
 $(function() {
 	$('ul.main-nav a[href="'+location.pathname+'"]').parent().addClass('active');
+
+	$('#project-toggle span').text($('#projects-list li.selected a').text());
 });

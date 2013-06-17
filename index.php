@@ -1,7 +1,28 @@
 <?php
+session_start();
 
 require 'flight/flight/Flight.php';
 require 'Mail.php';
+
+Flight::map('config', function() {
+	$config = file_get_contents('config.json');
+	return json_decode($config);
+});
+
+$config = Flight::config();
+
+Flight::register('mongo', 'MongoClient', [$config->dbms->server]);
+
+Flight::map('projectdb', function($project) {
+	$mongo = Flight::mongo();
+	return $mongo->selectDB($project);
+});
+
+Flight::map('sysdb', function() {
+	$mongo = Flight::mongo();
+	$config = Flight::config();
+	return $mongo->selectDB($config->dbms->db);
+});
 
 Flight::map('translit', function($str) {
     $tr = array(
@@ -27,12 +48,12 @@ Flight::route('/', function(){
 });
 
 Flight::route('GET /dashboard', function() {
-	$mongo = new MongoClient();
-	$bugs = $mongo->agilit->tasks->find([
+	$db = Flight::projectdb($_SESSION['currentProject']);
+	$bugs = $db->tasks->find([
 		'type' => 'bug'
 	]);
 
-	$features = $mongo->agilit->tasks->find([
+	$features = $db->tasks->find([
 		'type' => 'feature'
 	]);
 
@@ -42,8 +63,8 @@ Flight::route('GET /dashboard', function() {
 
 Flight::route('POST /dashboard/add/@type', function($type) {
 	$taskId = Flight::translit($_POST['name']);
-	$mongo = new MongoClient();
-	$mongo->agilit->tasks->insert([
+	$db = Flight::projectdb($_SESSION['currentProject']);
+	$db->tasks->insert([
 		'_id' => $taskId,
 		'name' => $_POST['name'],
 		'details' => $_POST['details'],
@@ -55,24 +76,24 @@ Flight::route('POST /dashboard/add/@type', function($type) {
 });
 
 Flight::route('GET /task/@id', function($id) {
-	$mongo = new MongoClient();
-	$task = $mongo->agilit->tasks->findOne(['_id' => $id]);
+	$db = Flight::projectdb($_SESSION['currentProject']);
+	$task = $db->tasks->findOne(['_id' => $id]);
 
 	Flight::render('task', $task, 'content');
 	Flight::render('root');
 });
 
 Flight::route('PUT /task/@id/close', function($id) {
-	$mongo = new MongoClient();
-	$task = $mongo->agilit->tasks->update(['_id' => $id],
+	$db = Flight::projectdb($_SESSION['currentProject']);
+	$task = $db->tasks->update(['_id' => $id],
 										  ['$set' => ['status' => 'close']]);
 
 	Flight::json(['success' => true, 'taskId' => $id]);
 });
 
 Flight::route('PUT /task/@id/open', function($id) {
-	$mongo = new MongoClient();
-	$task = $mongo->agilit->tasks->update(['_id' => $id],
+	$db = Flight::projectdb($_SESSION['currentProject']);
+	$task = $db->tasks->update(['_id' => $id],
 										  ['$set' => ['status' => 'open']]);
 
 	Flight::json(['success' => true, 'taskId' => $id]);
@@ -87,15 +108,15 @@ Flight::route('GET /branches', function() {
 });
 
 Flight::route('GET /backlog', function() {
-	$mongo = new MongoClient();
-	$backlog = $mongo->agilit->backlog->find()->sort(['rating' => -1]);
+	$db = Flight::projectdb($_SESSION['currentProject']);
+	$backlog = $db->backlog->find()->sort(['rating' => -1]);
 	Flight::render('backlog', ['backlog' => $backlog], 'content');
 	Flight::render('root');
 });
 
 Flight::route('POST /backlog/add', function() {
-	$mongo = new MongoClient();
-	$mongo->agilit->backlog->insert([
+	$db = Flight::projectdb($_SESSION['currentProject']);
+	$db->backlog->insert([
 		'text' => $_POST['record'],
 		'rating' => 0
 	]);
@@ -104,8 +125,8 @@ Flight::route('POST /backlog/add', function() {
 });
 
 Flight::route('GET /backlog/remove/@id', function($id) {
-	$mongo = new MongoClient();
-	$mongo->agilit->backlog->remove([
+	$db = Flight::projectdb($_SESSION['currentProject']);
+	$db->backlog->remove([
 		'_id' => new MongoId($id)
 	]);
 	
@@ -113,23 +134,23 @@ Flight::route('GET /backlog/remove/@id', function($id) {
 });
 
 Flight::route('GET /backlog/up/@id', function($id) {
-	$mongo = new MongoClient();
-	$mongo->agilit->backlog->update(['_id' => new MongoId($id)],
+	$db = Flight::projectdb($_SESSION['currentProject']);
+	$db->backlog->update(['_id' => new MongoId($id)],
 									['$inc' => ['rating' => 1]]);
 	Flight::json(['success' => true]);
 });
 
 Flight::route('GET /stream', function() {
-	$mongo = new MongoClient();
-	$stream = $mongo->agilit->stream->find()->sort(['date' => -1]);
+	$db = Flight::projectdb($_SESSION['currentProject']);
+	$stream = $db->stream->find()->sort(['date' => -1]);
 
 	Flight::render('stream', ['stream' => $stream], 'content');
 	Flight::render('root');
 });
 
 Flight::route('POST /stream/add', function() {
-	$mongo = new MongoClient();
-	$mongo->agilit->stream->insert([
+	$db = Flight::projectdb($_SESSION['currentProject']);
+	$db->stream->insert([
 		'text' => $_POST['note'],
 		'author' => 'Kirill Zorin',
 		'date' => new MongoDate(time())
@@ -141,20 +162,20 @@ Flight::route('POST /stream/add', function() {
 });
 
 Flight::route('GET /settings', function() {
-	$mongo = new MongoClient();
-	$settings = $mongo->agilit->settings->findOne(['project' => '35cm']);
+	$db = Flight::projectdb($_SESSION['currentProject']);
+	$settings = $db->settings->findOne(['project' => '35cm']);
 
 	Flight::render('settings', ['settings' => $settings], 'content');
 	Flight::render('root');
 });
 
 Flight::route('POST /settings', function() {
-	$mongo = new MongoClient();
-	$mongo->agilit->settings->update(['project' => '35cm'],
-									 ['project' => '35cm',
-									  'repoPath' => $_POST['repo'], 
-									  'clonePath' => $_POST['path']],
-									 ['upsert' => true]);
+	$db = Flight::projectdb($_SESSION['currentProject']);
+	$db->settings->update(['project' => '35cm'],
+						  ['project' => '35cm',
+						   'repoPath' => $_POST['repo'], 
+						   'clonePath' => $_POST['path']],
+						  ['upsert' => true]);
 
 	Flight::json(['success' => true]);
 });
@@ -165,14 +186,14 @@ Flight::route('GET /authorization', function() {
 
 // @todo Сделать запоминание авторизации через авторизационный ключ в куках
 Flight::route('POST /authorization', function() {
-	$mongo = new MongoClient();
+	$sysdb = Flight::sysdb();
 	$email =filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
 	
 	if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 		Flight::halt(406, 'Email address is not valid!');
 	}
 
-	$user = $mongo->agilit->users->findOne(['email' => $email]);
+	$user = $sysdb->users->findOne(['_id' => $email]);
 	
 	if(!$user) {
 		// Парль отсылается только в случае, если он генерируется системой. Иначе есть опасность отослать вредные данные пользователю.
@@ -186,8 +207,16 @@ Flight::route('POST /authorization', function() {
 		}
 
 		$hash = md5($password);
-		$mongo->agilit->users->insert(['email' => $email,
-									   'password' => $hash]);
+		$user = ['_id' => $email,
+				 'password' => $hash,
+				 'projects' => [['name' => substr($email, 0, strpos($email, '@')).'_'.rand(0, 999),
+				 				 'title' => 'Personal',
+				 				 'owner' => true,
+				 				 'current' => true]],
+				 'name' => 'Hello',
+				 'lastname' => 'Username'
+				];
+		$sysdb->users->insert($user);
 
 		$mail = new Mail('Agile IT! <bot@agileit.ru>');
 		$mail->send($email, 'Successful registration', $message);
@@ -197,8 +226,14 @@ Flight::route('POST /authorization', function() {
 		}
 	}
 
-	session_start();
 	$_SESSION['user'] = $user;
+
+	foreach($user['projects'] as $project) {
+		if($project['current']) {
+			$_SESSION['currentProject'] = $project['name'];
+			break;
+		}
+	}
 
 	Flight::json(['success' => true]);
 });
