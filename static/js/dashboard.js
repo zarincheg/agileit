@@ -43,7 +43,10 @@ function addFeature() {
 		dataType: 'json',
 		success: function(data, textStatus) {
 			showAlert('success', textStatus);
-			insertTaskTo('#feature-list', featureName, data.taskId);
+			
+			taskItem = $($('#task-item').html());
+			taskItem.children('a').attr('href', '/task/'+data.taskId).text(featureName);
+			taskItem.appendTo('#feature-list');
 		},
 		error: function(xhr, textStatus, error) {
 			showAlert('error', error);
