@@ -33,7 +33,7 @@
               <a href="#" class="dropdown-toggle" id="project-toggle" data-toggle="dropdown"><span>Projects</span> <b class="caret"></b></a>
               <ul class="dropdown-menu" id="projects-list">
                 <? foreach($_SESSION['user']['projects'] as $project) { 
-                  $current = $project['current'] ? 'selected' : '';
+                  $current = $_SESSION['currentProject'] == $project['name'] ? 'selected' : '';
                   ?>
                 <li class="<?= $current ?>" data-project-name="<?= $project['name'] ?>"><a href="/dashboard/select/<?= $project['name'] ?>"><?= $project['title'] ?></a></li>
                 <? } ?>

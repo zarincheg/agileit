@@ -75,6 +75,14 @@ Flight::route('POST /dashboard/add/@type', function($type) {
 	Flight::json(['success' => true, 'taskId' => $taskId]);
 });
 
+Flight::route('GET /dashboard/select/@project', function($project) {
+	$userId = $_SESSION['user']['_id'];
+	$db = Flight::sysdb();
+	$db->users->update(['_id' => $userId], ['$set' => ['currentProject' => $project]]);
+
+	Flight::redirect('/dashboard');
+});
+
 Flight::route('GET /task/@id', function($id) {
 	$db = Flight::projectdb($_SESSION['currentProject']);
 	$task = $db->tasks->findOne(['_id' => $id]);
@@ -207,16 +215,23 @@ Flight::route('POST /authorization', function() {
 		}
 
 		$hash = md5($password);
+		$projectName = substr($email, 0, strpos($email, '@')).'_'.rand(0, 999);
 		$user = ['_id' => $email,
 				 'password' => $hash,
-				 'projects' => [['name' => substr($email, 0, strpos($email, '@')).'_'.rand(0, 999),
+				 'projects' => [['name' => $projectName,
 				 				 'title' => 'Personal',
-				 				 'owner' => true,
-				 				 'current' => true]],
+				 				 'owner' => true]],
 				 'name' => 'Hello',
-				 'lastname' => 'Username'
+				 'lastname' => 'Username',
+				 'currentProject' => $projectName
 				];
 		$sysdb->users->insert($user);
+
+		$db = Flight::projectdb($projectName);
+		$db->users->insert(['_id' => $email,
+							'name' => 'Hello',
+				 			'lastname' => 'Username',
+				 			'owner' => true]);
 
 		$mail = new Mail('Agile IT! <bot@agileit.ru>');
 		$mail->send($email, 'Successful registration', $message);
@@ -227,13 +242,7 @@ Flight::route('POST /authorization', function() {
 	}
 
 	$_SESSION['user'] = $user;
-
-	foreach($user['projects'] as $project) {
-		if($project['current']) {
-			$_SESSION['currentProject'] = $project['name'];
-			break;
-		}
-	}
+	$_SESSION['currentProject'] = $user['currentProject'];
 
 	Flight::json(['success' => true]);
 });
