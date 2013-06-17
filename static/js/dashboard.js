@@ -18,6 +18,9 @@ function addBug() {
 			taskItem = $($('#task-item').html());
 			taskItem.children('a').attr('href', '/task/'+data.taskId).text(bugName);
 			taskItem.appendTo('#bug-list');
+
+			$('#addBugForm input[name=name]').val('');
+			$('#addBugForm textarea[name=details]').text('');
 		},
 		error: function(xhr, textStatus, error) {
 			showAlert('error', error);
@@ -47,6 +50,9 @@ function addFeature() {
 			taskItem = $($('#task-item').html());
 			taskItem.children('a').attr('href', '/task/'+data.taskId).text(featureName);
 			taskItem.appendTo('#feature-list');
+
+			$('#addFeatureForm input[name=name]').val('');
+			$('#addFeatureForm textarea[name=details]').val('');
 		},
 		error: function(xhr, textStatus, error) {
 			showAlert('error', error);
