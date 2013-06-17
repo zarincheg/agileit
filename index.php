@@ -189,8 +189,8 @@ Flight::route('POST /authorization', function() {
 		$mongo->agilit->users->insert(['email' => $email,
 									   'password' => $hash]);
 
-		$mail = new Mail('bot@agileit.ru');
-		$mail->send($email, 'Agile IT! - Successful registration', $message);
+		$mail = new Mail('Agile IT! <bot@agileit.ru>');
+		$mail->send($email, 'Successful registration', $message);
 	} else {
 		if(md5($_POST['password']) !== $user['password']) {
 			Flight::halt(403, 'Incorrect password!');
