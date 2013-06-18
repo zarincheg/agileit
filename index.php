@@ -1,8 +1,9 @@
 <?php
-session_start();
 
 require 'flight/flight/Flight.php';
 require 'Mail.php';
+
+session_start();
 
 Flight::map('config', function() {
 	$config = file_get_contents('config.json');
@@ -41,151 +42,6 @@ Flight::map('translit', function($str) {
         "ы"=>"yi","ь"=>"","э"=>"e","ю"=>"yu","я"=>"ya", " " => "-"
     );
     return strtr($str, $tr);
-});
-
-Flight::route('/', function(){
-    echo 'hello world!';
-});
-
-Flight::route('GET /dashboard', function() {
-	$db = Flight::projectdb($_SESSION['currentProject']);
-	$bugs = $db->tasks->find([
-		'type' => 'bug'
-	]);
-
-	$features = $db->tasks->find([
-		'type' => 'feature'
-	]);
-
-	Flight::render('dashboard', ['bugs' => $bugs, 'features' => $features], 'content');
-	Flight::render('root');
-});
-
-Flight::route('POST /dashboard/add/@type', function($type) {
-	$taskId = Flight::translit($_POST['name']);
-	$db = Flight::projectdb($_SESSION['currentProject']);
-	$db->tasks->insert([
-		'_id' => $taskId,
-		'name' => $_POST['name'],
-		'details' => $_POST['details'],
-		'type' => $type,
-		'status' => 'open'
-	]);
-	
-	Flight::json(['success' => true, 'taskId' => $taskId]);
-});
-
-Flight::route('GET /dashboard/select/@project', function($project) {
-	$userId = $_SESSION['user']['_id'];
-	$db = Flight::sysdb();
-	$db->users->update(['_id' => $userId], ['$set' => ['currentProject' => $project]]);
-
-	Flight::redirect('/dashboard');
-});
-
-Flight::route('GET /task/@id', function($id) {
-	$db = Flight::projectdb($_SESSION['currentProject']);
-	$task = $db->tasks->findOne(['_id' => $id]);
-
-	Flight::render('task', $task, 'content');
-	Flight::render('root');
-});
-
-Flight::route('PUT /task/@id/close', function($id) {
-	$db = Flight::projectdb($_SESSION['currentProject']);
-	$task = $db->tasks->update(['_id' => $id],
-										  ['$set' => ['status' => 'close']]);
-
-	Flight::json(['success' => true, 'taskId' => $id]);
-});
-
-Flight::route('PUT /task/@id/open', function($id) {
-	$db = Flight::projectdb($_SESSION['currentProject']);
-	$task = $db->tasks->update(['_id' => $id],
-										  ['$set' => ['status' => 'open']]);
-
-	Flight::json(['success' => true, 'taskId' => $id]);
-});
-
-Flight::route('GET /branches', function() {
-	preg_match_all("!.*?origin/(.*?)\n!", `git branch -r`, $list);
-	sort($list[1]);
-
-	Flight::render('branches', ['list' => $list[1]], 'content');
-	Flight::render('root');
-});
-
-Flight::route('GET /backlog', function() {
-	$db = Flight::projectdb($_SESSION['currentProject']);
-	$backlog = $db->backlog->find()->sort(['rating' => -1]);
-	Flight::render('backlog', ['backlog' => $backlog], 'content');
-	Flight::render('root');
-});
-
-Flight::route('POST /backlog/add', function() {
-	$db = Flight::projectdb($_SESSION['currentProject']);
-	$db->backlog->insert([
-		'text' => $_POST['record'],
-		'rating' => 0
-	]);
-	
-	Flight::json(['success' => true, 'text' => $_POST['record']]);
-});
-
-Flight::route('GET /backlog/remove/@id', function($id) {
-	$db = Flight::projectdb($_SESSION['currentProject']);
-	$db->backlog->remove([
-		'_id' => new MongoId($id)
-	]);
-	
-	Flight::json(['success' => true]);
-});
-
-Flight::route('GET /backlog/up/@id', function($id) {
-	$db = Flight::projectdb($_SESSION['currentProject']);
-	$db->backlog->update(['_id' => new MongoId($id)],
-									['$inc' => ['rating' => 1]]);
-	Flight::json(['success' => true]);
-});
-
-Flight::route('GET /stream', function() {
-	$db = Flight::projectdb($_SESSION['currentProject']);
-	$stream = $db->stream->find()->sort(['date' => -1]);
-
-	Flight::render('stream', ['stream' => $stream], 'content');
-	Flight::render('root');
-});
-
-Flight::route('POST /stream/add', function() {
-	$db = Flight::projectdb($_SESSION['currentProject']);
-	$db->stream->insert([
-		'text' => $_POST['note'],
-		'author' => 'Kirill Zorin',
-		'date' => new MongoDate(time())
-	]);
-	
-	Flight::json(['success' => true, 'text' => $_POST['note'],
-									 'author' => 'Kirill Zorin',
-									 'date' => date("d-m-Y H:i")]);
-});
-
-Flight::route('GET /settings', function() {
-	$db = Flight::projectdb($_SESSION['currentProject']);
-	$settings = $db->settings->findOne(['project' => '35cm']);
-
-	Flight::render('settings', ['settings' => $settings], 'content');
-	Flight::render('root');
-});
-
-Flight::route('POST /settings', function() {
-	$db = Flight::projectdb($_SESSION['currentProject']);
-	$db->settings->update(['project' => '35cm'],
-						  ['project' => '35cm',
-						   'repoPath' => $_POST['repo'], 
-						   'clonePath' => $_POST['path']],
-						  ['upsert' => true]);
-
-	Flight::json(['success' => true]);
 });
 
 Flight::route('GET /authorization', function() {
@@ -242,7 +98,169 @@ Flight::route('POST /authorization', function() {
 	}
 
 	$_SESSION['user'] = $user;
-	$_SESSION['currentProject'] = $user['currentProject'];
+
+	Flight::json(['success' => true]);
+});
+
+Flight::route('*', function() {
+	if(isset($_SESSION['user'])) {
+		$sysdb = Flight::sysdb();
+		$user = $sysdb->users->findOne(['_id' => $_SESSION['user']['_id']]);
+		$_SESSION['user'] = $user;
+		
+		Flight::set('user', $user);
+		Flight::set('currentProject', $user['currentProject']);
+		
+		Flight::view()->set('user', $user);
+		Flight::view()->set('currentProject', $user['currentProject']);
+
+		return true;
+	} else {
+		Flight::redirect('/authorization');
+	}
+});
+
+Flight::route('/', function(){
+    echo 'hello world!';
+});
+
+Flight::route('GET /dashboard', function() {
+	$db = Flight::projectdb(Flight::get('currentProject'));
+	$bugs = $db->tasks->find([
+		'type' => 'bug'
+	]);
+
+	$features = $db->tasks->find([
+		'type' => 'feature'
+	]);
+
+	Flight::render('dashboard', ['bugs' => $bugs, 'features' => $features], 'content');
+	Flight::render('root');
+});
+
+Flight::route('POST /dashboard/add/@type', function($type) {
+	$taskId = Flight::translit($_POST['name']);
+	$db = Flight::projectdb(Flight::get('currentProject'));
+	$db->tasks->insert([
+		'_id' => $taskId,
+		'name' => $_POST['name'],
+		'details' => $_POST['details'],
+		'type' => $type,
+		'status' => 'open'
+	]);
+	
+	Flight::json(['success' => true, 'taskId' => $taskId]);
+});
+
+Flight::route('GET /dashboard/select/@project', function($project) {
+	$userId = $_SESSION['user']['_id'];
+	$db = Flight::sysdb();
+	$db->users->update(['_id' => $userId], ['$set' => ['currentProject' => $project]]);
+
+	Flight::redirect('/dashboard');
+});
+
+Flight::route('GET /task/@id', function($id) {
+	$db = Flight::projectdb(Flight::get('currentProject'));
+	$task = $db->tasks->findOne(['_id' => $id]);
+
+	Flight::render('task', $task, 'content');
+	Flight::render('root');
+});
+
+Flight::route('PUT /task/@id/close', function($id) {
+	$db = Flight::projectdb(Flight::get('currentProject'));
+	$task = $db->tasks->update(['_id' => $id],
+										  ['$set' => ['status' => 'close']]);
+
+	Flight::json(['success' => true, 'taskId' => $id]);
+});
+
+Flight::route('PUT /task/@id/open', function($id) {
+	$db = Flight::projectdb(Flight::get('currentProject'));
+	$task = $db->tasks->update(['_id' => $id],
+										  ['$set' => ['status' => 'open']]);
+
+	Flight::json(['success' => true, 'taskId' => $id]);
+});
+
+Flight::route('GET /branches', function() {
+	preg_match_all("!.*?origin/(.*?)\n!", `git branch -r`, $list);
+	sort($list[1]);
+
+	Flight::render('branches', ['list' => $list[1]], 'content');
+	Flight::render('root');
+});
+
+Flight::route('GET /backlog', function() {
+	$db = Flight::projectdb(Flight::get('currentProject'));
+	$backlog = $db->backlog->find()->sort(['rating' => -1]);
+	Flight::render('backlog', ['backlog' => $backlog], 'content');
+	Flight::render('root');
+});
+
+Flight::route('POST /backlog/add', function() {
+	$db = Flight::projectdb(Flight::get('currentProject'));
+	$db->backlog->insert([
+		'text' => $_POST['record'],
+		'rating' => 0
+	]);
+	
+	Flight::json(['success' => true, 'text' => $_POST['record']]);
+});
+
+Flight::route('GET /backlog/remove/@id', function($id) {
+	$db = Flight::projectdb(Flight::get('currentProject'));
+	$db->backlog->remove([
+		'_id' => new MongoId($id)
+	]);
+	
+	Flight::json(['success' => true]);
+});
+
+Flight::route('GET /backlog/up/@id', function($id) {
+	$db = Flight::projectdb(Flight::get('currentProject'));
+	$db->backlog->update(['_id' => new MongoId($id)],
+									['$inc' => ['rating' => 1]]);
+	Flight::json(['success' => true]);
+});
+
+Flight::route('GET /stream', function() {
+	$db = Flight::projectdb(Flight::get('currentProject'));
+	$stream = $db->stream->find()->sort(['date' => -1]);
+
+	Flight::render('stream', ['stream' => $stream], 'content');
+	Flight::render('root');
+});
+
+Flight::route('POST /stream/add', function() {
+	$db = Flight::projectdb(Flight::get('currentProject'));
+	$db->stream->insert([
+		'text' => $_POST['note'],
+		'author' => 'Kirill Zorin',
+		'date' => new MongoDate(time())
+	]);
+	
+	Flight::json(['success' => true, 'text' => $_POST['note'],
+									 'author' => 'Kirill Zorin',
+									 'date' => date("d-m-Y H:i")]);
+});
+
+Flight::route('GET /settings', function() {
+	$db = Flight::projectdb(Flight::get('currentProject'));
+	$settings = $db->settings->findOne(['project' => '35cm']);
+
+	Flight::render('settings', ['settings' => $settings], 'content');
+	Flight::render('root');
+});
+
+Flight::route('POST /settings', function() {
+	$db = Flight::projectdb(Flight::get('currentProject'));
+	$db->settings->update(['project' => '35cm'],
+						  ['project' => '35cm',
+						   'repoPath' => $_POST['repo'], 
+						   'clonePath' => $_POST['path']],
+						  ['upsert' => true]);
 
 	Flight::json(['success' => true]);
 });

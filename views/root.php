@@ -27,13 +27,13 @@
           </ul>
 
           <ul class="nav pull-right">
-            <li class="navbar-text"><?= $_SESSION['user']['name'] ?> <?= $_SESSION['user']['lastname'] ?></li>
+            <li class="navbar-text"><?= $user['name'] ?> <?= $user['lastname'] ?></li>
             <li class="divider-vertical"></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" id="project-toggle" data-toggle="dropdown"><span>Projects</span> <b class="caret"></b></a>
               <ul class="dropdown-menu" id="projects-list">
-                <? foreach($_SESSION['user']['projects'] as $project) { 
-                  $current = $_SESSION['currentProject'] == $project['name'] ? 'selected' : '';
+                <? foreach($user['projects'] as $project) { 
+                  $current = $currentProject == $project['name'] ? 'selected' : '';
                   ?>
                 <li class="<?= $current ?>" data-project-name="<?= $project['name'] ?>"><a href="/dashboard/select/<?= $project['name'] ?>"><?= $project['title'] ?></a></li>
                 <? } ?>
