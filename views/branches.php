@@ -3,7 +3,7 @@
         <div class="span8">
           
           <div class="tabbable"> <!-- Only required for left/right tabs -->
-            <ul class="nav nav-tabs">
+            <ul class="nav nav-pills">
               <li><a href="#tab5" data-toggle="tab">List</a></li>
               <li class="active"><a href="#tab1" data-toggle="tab">Review</a></li>
               <li><a href="#tab2" data-toggle="tab">Bugfix</a></li>
