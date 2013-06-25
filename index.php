@@ -185,15 +185,27 @@ Flight::route('PUT /task/@id/open', function($id) {
 });
 
 Flight::route('GET /branches', function() {
-	$list = [];
-	$db = Flight::projectdb(Flight::get('currentProject'));
-	$branches = $db->branches->find([], ['name' => true, 'status' => true]);
+	$branches = function(array $match) {
+		$list = [];
+		$db = Flight::projectdb(Flight::get('currentProject'));
+		$branches = $db->branches->find($match, ['name' => true, 'status' => true]);
 
-	while($branches->hasNext()) {
-		$list[] = $branches->getNext();
-	}
+		while($branches->hasNext()) {
+			$list[] = $branches->getNext();
+		}
 
-	Flight::render('branches', ['list' => $list], 'content');
+		return $list;
+	};
+	
+	$list = $branches([]);
+	$reviewList = $branches(['status' => 'review']);
+	$bugList = $branches(['type' => 'patch']);
+	$featureList = $branches(['type' => 'feature']);
+
+	Flight::render('branches', ['list' => $list,
+								'reviewList' => $reviewList,
+								'bugList' => $bugList,
+								'featureList' => $featureList], 'content');
 	Flight::render('root');
 });
 

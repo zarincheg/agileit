@@ -38,31 +38,18 @@
               </div>
 
               <div class="tab-pane active" id="tab1">
-                <ol class="wide-item">
-                  <li>Any Bug/Task</li>
-                  <li>
-                    <a data-toggle="collapse" href="#branch">patch-site-pages</a>
-                    <div class="badge-empty badge-success"></div>
-                    <div id="branch" class="collapse">
-                      <span class="label label-success">Complete</span>
+                <ul class="wide-item unstyled branch-list">
+                  <? foreach ($reviewList as $branch) { ?>
+                  <li> 
+                    <a data-toggle="collapse" href="#branch-rwacts-<?= $branch['name'] ?>"><?= $branch['name'] ?></a>
+                    | taskName, Kirill Zorin
+                    <div id="branch-rwacts-<?= $branch['name'] ?>" class="collapse">
                       <span class="label label-warning">Testing</span>
                       <span class="label label-important">Fix</span>
-                      <span class="label label-info">Review</span>
                     </div>
                   </li>
-                  <li>
-                    <a href="#">Any Bug/Task</a>
-                    <div class="badge-empty badge-important"></div>
-                  </li>
-                  <li>Any Bug/Task</li>
-                  <li>Any Bug/Task</li>
-                  <li>Any Bug/Task</li>
-                  <li>Any Bug/Task</li>
-                  <li><a href="#">Any Bug/Task</a>
-                    <div class="badge-empty badge-info"></div>
-                  </li>
-                  <li>Any Bug/Task</li>
-                </ol>
+                  <? } ?>
+                </ul>
               </div>
               <div class="tab-pane" id="tab2">
                 <ul class="nav nav-pills">
