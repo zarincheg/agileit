@@ -94,34 +94,46 @@ $badge = function($status) {
               </div>
 
               <div class="tab-pane" id="tab3">
-                <ul class="nav nav-pills">
-                  <li class="active">
-                    <a href="#">Merged</a>
-                  </li>
-                  <li>
-                    <a href="#">Not merged</a>
-                  </li>
-                </ul>
-                <ol class="wide-item">
-                  <li>Any Bug/Task</li>
-                  <li>
-                    <a href="#">Any Bug/Task</a>
-                    <span class="badge badge-important">O</span>
-                  </li>
-                  <li>
-                    <a href="#">Any Bug/Task</a>
-                    <span class="badge badge-important">O</span>
-                  </li>
-                  <li>Any Bug/Task</li>
-                  <li>Any Bug/Task</li>
-                  <li>Any Bug/Task</li>
-                  <li>Any Bug/Task</li>
-                  <li><a href="#">Any Bug/Task</a>
-                    <span class="badge badge-important">O</span>
-                  </li>
-                  <li>Any Bug/Task</li>
-                </ol>
+                <div class="row-fluid">
+                  <div class="span6">
+                    Merged
+                    <ul class="wide-item unstyled branch-list">
+                      <? foreach($featureList as $branch) { 
+                        if(!in_array('feature-testing', $branch['merged'])) continue; ?>
+                      <li>
+                        <a data-toggle="collapse" href="#branch-ftacts-<?= $branch['name'] ?>"><?= $branch['name'] ?></a>
+                        | taskName, Kirill Zorin
+                        <div id="branch-ftacts-<?= $branch['name'] ?>" class="collapse">
+                          <span class="label label-success">Complete</span>
+                          <span class="label label-warning">Testing</span>
+                          <span class="label label-important">Fix</span>
+                          <span class="label label-info">Review</span>
+                        </div>
+                      </li>
+                      <? } ?>
+                    </ul>
+                  </div>
+                  <div class="span6">
+                    Not merged
+                    <ul class="wide-item unstyled branch-list">
+                      <? foreach($featureList as $branch) { 
+                        if(in_array('feature-testing', $branch['merged'])) continue; ?>
+                      <li>
+                        <a data-toggle="collapse" href="#branch-ftacts-<?= $branch['name'] ?>"><?= $branch['name'] ?></a>
+                        | taskName, Kirill Zorin
+                        <div id="branch-ftacts-<?= $branch['name'] ?>" class="collapse">
+                          <span class="label label-success">Complete</span>
+                          <span class="label label-warning">Testing</span>
+                          <span class="label label-important">Fix</span>
+                          <span class="label label-info">Review</span>
+                        </div>
+                      </li>
+                      <? } ?>
+                    </ul>
+                  </div>
+                </div>
               </div>
+
               <div class="tab-pane" id="tab4">
                 
                 <div class="accordion" id="accordion2">
