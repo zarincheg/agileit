@@ -172,7 +172,7 @@ $badge = function($status) {
                           <li>remotes/origin/405_concurrents</li>
                           <li>remotes/origin/437_profVersionFixes</li>
                         </ul>
-                        <button class="btn btn-mini btn-primary inline" type="button" data-toggle="modal" data-target="#addBranch">Add branch</button>
+                        <button class="btn btn-mini btn-primary inline" type="button" data-toggle="modal" data-target="#addBranch"><i class="icon-plus icon-white"></i> Add branch</button>
                       </div>
                     </div>
                   </div>
@@ -233,6 +233,6 @@ $badge = function($status) {
       </div>
       <div class="modal-footer">
         <a href="#" class="btn">Close</a>
-        <a href="#" class="btn btn-inverse">Add</a>
+        <a href="#" class="btn btn-inverse"><i class="icon-plus icon-white"></i> Add</a>
       </div>
     </div>

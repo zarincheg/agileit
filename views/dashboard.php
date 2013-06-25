@@ -5,8 +5,8 @@
       <div class="input-append">
       <form id="addBugForm">
         <input class="input-xlarge" id="appendedInputButtons" type="text" name="name">
-        <button class="btn" type="submit">Add</button>
-        <button class="btn" type="button" data-toggle="collapse" data-target="#bug-detail">Details</button>
+        <button class="btn" type="submit"><i class="icon-plus"></i> Add</button>
+        <button class="btn" type="button" data-toggle="collapse" data-target="#bug-detail"><i class="icon-align-right"></i> Details</button>
         <div id="bug-detail" class="collapse">
           <textarea name="details" class="input-xlarge details" rows="5"></textarea>
         </div>
@@ -26,8 +26,8 @@
       <div class="input-append">
       <form id="addFeatureForm">
           <input class="input-xlarge" id="appendedInputButtons" type="text" name="name">
-          <button class="btn" type="submit">Add</button>
-          <button class="btn" type="button" data-toggle="collapse" data-target="#feature-detail">Details</button>
+          <button class="btn" type="submit"><i class="icon-plus"></i> Add</button>
+          <button class="btn" type="button" data-toggle="collapse" data-target="#feature-detail"><i class="icon-align-right"></i> Details</button>
           <div id="feature-detail" class="collapse">
             <textarea name="details" class="input-xlarge details" rows="5"></textarea>
           </div>

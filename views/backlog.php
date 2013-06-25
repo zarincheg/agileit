@@ -4,7 +4,7 @@
       <div class="input-append">
         <form action="/backlog/add" method="post" id="addBacklogForm">
           <input class="input-xxlarge" id="appendedInputButtons" type="text" name="record">
-          <button class="btn" type="submit">Add</button>
+          <button class="btn" type="submit"><i class="icon-plus"></i> Add</button>
         </form>
       </div>
       <ol class="wide-item" id="backlog">
