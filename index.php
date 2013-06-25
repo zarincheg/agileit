@@ -188,7 +188,7 @@ Flight::route('GET /branches', function() {
 	$branches = function(array $match) {
 		$list = [];
 		$db = Flight::projectdb(Flight::get('currentProject'));
-		$branches = $db->branches->find($match, ['name' => true, 'status' => true]);
+		$branches = $db->branches->find($match, ['name' => true, 'status' => true, 'merged' => true]);
 
 		while($branches->hasNext()) {
 			$list[] = $branches->getNext();

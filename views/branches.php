@@ -1,6 +1,15 @@
+<?
+$badge = function($status) {
+  $badges = ['review' => 'info',
+             'fix' => 'important',
+             'testing' => 'warning',
+             'complete' => 'success'];
+  return $badges[$status];
+};
+?>
     <div class="container main">
       <div class="row">
-        <div class="span8">
+        <div class="span12">
           
           <div class="tabbable"> <!-- Only required for left/right tabs -->
             <ul class="nav nav-pills">
@@ -13,21 +22,12 @@
             <div class="tab-content state-content">
               <div class="tab-pane" id="tab5">
                 <ul class="unstyled wide-item branch-list">
-                  <?
-                  $badge = function($status) {
-                    $badges = ['review' => 'info',
-                               'fix' => 'important',
-                               'testing' => 'warning',
-                               'complete' => 'success'];
-                    return $badges[$status];
-                  };
-
-                  foreach ($list as $branch) { ?>
+                  <? foreach($list as $branch) { ?>
                   <li>
                     <div class="badge-empty badge-<?= $badge($branch['status']) ?> li-before"></div>
                     <a data-toggle="collapse" href="#branch-acts-<?= $branch['name'] ?>"><?= $branch['name'] ?></a>
+                    | taskName, Kirill Zorin
                     <div id="branch-acts-<?= $branch['name'] ?>" class="collapse">
-                      <span class="label label-success">Complete</span>
                       <span class="label label-warning">Testing</span>
                       <span class="label label-important">Fix</span>
                       <span class="label label-info">Review</span>
@@ -39,7 +39,7 @@
 
               <div class="tab-pane active" id="tab1">
                 <ul class="wide-item unstyled branch-list">
-                  <? foreach ($reviewList as $branch) { ?>
+                  <? foreach($reviewList as $branch) { ?>
                   <li> 
                     <a data-toggle="collapse" href="#branch-rwacts-<?= $branch['name'] ?>"><?= $branch['name'] ?></a>
                     | taskName, Kirill Zorin
@@ -51,35 +51,48 @@
                   <? } ?>
                 </ul>
               </div>
+              
               <div class="tab-pane" id="tab2">
-                <ul class="nav nav-pills">
-                  <li class="active">
-                    <a href="#">Merged</a>
-                  </li>
-                  <li>
-                    <a href="#">Not merged</a>
-                  </li>
-                </ul>
-                <ol class="wide-item">
-                  <li>Any Bug/Task</li>
-                  <li>
-                    <a href="#">Any Bug/Task</a>
-                    <span class="badge badge-important">O</span>
-                  </li>
-                  <li>
-                    <a href="#">Any Bug/Task</a>
-                    <span class="badge badge-important">O</span>
-                  </li>
-                  <li>Any Bug/Task</li>
-                  <li>Any Bug/Task</li>
-                  <li>Any Bug/Task</li>
-                  <li>Any Bug/Task</li>
-                  <li><a href="#">Any Bug/Task</a>
-                    <span class="badge badge-important">O</span>
-                  </li>
-                  <li>Any Bug/Task</li>
-                </ol>
+                <div class="row-fluid">
+                  <div class="span6">
+                    Merged
+                    <ul class="wide-item unstyled branch-list">
+                      <? foreach($bugList as $branch) { 
+                        if(!in_array('fix-testing', $branch['merged'])) continue; ?>
+                      <li>
+                        <a data-toggle="collapse" href="#branch-fxacts-<?= $branch['name'] ?>"><?= $branch['name'] ?></a>
+                        | taskName, Kirill Zorin
+                        <div id="branch-fxacts-<?= $branch['name'] ?>" class="collapse">
+                          <span class="label label-success">Complete</span>
+                          <span class="label label-warning">Testing</span>
+                          <span class="label label-important">Fix</span>
+                          <span class="label label-info">Review</span>
+                        </div>
+                      </li>
+                      <? } ?>
+                    </ul>
+                  </div>
+                  <div class="span6">
+                    Not merged
+                    <ul class="wide-item unstyled branch-list">
+                      <? foreach($bugList as $branch) { 
+                        if(in_array('fix-testing', $branch['merged'])) continue; ?>
+                      <li>
+                        <a data-toggle="collapse" href="#branch-fxacts-<?= $branch['name'] ?>"><?= $branch['name'] ?></a>
+                        | taskName, Kirill Zorin
+                        <div id="branch-fxacts-<?= $branch['name'] ?>" class="collapse">
+                          <span class="label label-success">Complete</span>
+                          <span class="label label-warning">Testing</span>
+                          <span class="label label-important">Fix</span>
+                          <span class="label label-info">Review</span>
+                        </div>
+                      </li>
+                      <? } ?>
+                    </ul>
+                  </div>
+                </div>
               </div>
+
               <div class="tab-pane" id="tab3">
                 <ul class="nav nav-pills">
                   <li class="active">
