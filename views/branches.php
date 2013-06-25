@@ -12,11 +12,28 @@
             </ul>
             <div class="tab-content state-content">
               <div class="tab-pane" id="tab5">
-                <ul class="unstyled wide-item">
-                  <? foreach ($list as $branch) { ?>
-                  <li><?= $branch ?></li>
+                <ul class="unstyled wide-item branch-list">
+                  <?
+                  $badge = function($status) {
+                    $badges = ['review' => 'info',
+                               'fix' => 'important',
+                               'testing' => 'warning',
+                               'complete' => 'success'];
+                    return $badges[$status];
+                  };
+
+                  foreach ($list as $branch) { ?>
+                  <li>
+                    <div class="badge-empty badge-<?= $badge($branch['status']) ?> li-before"></div>
+                    <a data-toggle="collapse" href="#branch-acts-<?= $branch['name'] ?>"><?= $branch['name'] ?></a>
+                    <div id="branch-acts-<?= $branch['name'] ?>" class="collapse">
+                      <span class="label label-success">Complete</span>
+                      <span class="label label-warning">Testing</span>
+                      <span class="label label-important">Fix</span>
+                      <span class="label label-info">Review</span>
+                    </div>
+                  </li>
                   <? } ?>
-                  <li><div class="badge-empty badge-success li-before"></div>stable</li>
                 </ul>
               </div>
 

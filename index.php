@@ -185,10 +185,15 @@ Flight::route('PUT /task/@id/open', function($id) {
 });
 
 Flight::route('GET /branches', function() {
-	preg_match_all("!.*?origin/(.*?)\n!", `git branch -r`, $list);
-	sort($list[1]);
+	$list = [];
+	$db = Flight::projectdb(Flight::get('currentProject'));
+	$branches = $db->branches->find([], ['name' => true, 'status' => true]);
 
-	Flight::render('branches', ['list' => $list[1]], 'content');
+	while($branches->hasNext()) {
+		$list[] = $branches->getNext();
+	}
+
+	Flight::render('branches', ['list' => $list], 'content');
 	Flight::render('root');
 });
 

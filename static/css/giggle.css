@@ -111,3 +111,7 @@ div.task-labels {
 .icon-thumbs-up {
 	cursor: pointer;
 }
+
+ul.branch-list li {
+	padding-bottom: 5pt;
+}
