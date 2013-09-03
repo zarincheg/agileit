@@ -265,7 +265,7 @@ Flight::route('POST /stream/add', function() {
 
 Flight::route('GET /settings', function() {
 	$db = Flight::projectdb(Flight::get('currentProject'));
-	$settings = $db->settings->findOne(['project' => '35cm']);
+	$settings = $db->settings->findOne(['project' => Flight::get('currentProject')]);
 
 	Flight::render('settings', ['settings' => $settings], 'content');
 	Flight::render('root');
@@ -273,11 +273,37 @@ Flight::route('GET /settings', function() {
 
 Flight::route('POST /settings', function() {
 	$db = Flight::projectdb(Flight::get('currentProject'));
-	$db->settings->update(['project' => '35cm'],
-						  ['project' => '35cm',
+	$db->settings->update(['project' => Flight::get('currentProject')],
+						  ['project' => Flight::get('currentProject'),
 						   'repoPath' => $_POST['repo'], 
 						   'clonePath' => $_POST['path']],
 						  ['upsert' => true]);
+
+	Flight::json(['success' => true]);
+});
+
+Flight::route('GET /new', function() {
+	Flight::render('addproject', [], 'content');
+	Flight::render('root');
+});
+
+Flight::route('POST /new', function() {
+	$user = Flight::get('user');
+
+	$user['projects'][] = [
+		'name' => $_POST['name'],
+		'title' => $_POST['title'],
+		'owner' => true
+	];
+
+	$sysdb = Flight::sysdb();
+	$sysdb->users->update(['_id' => $user['_id']], $user);
+
+	$db = Flight::projectdb($_POST['name']);
+	$db->users->insert(['_id' => $user['_id'],
+		'name' => $user['name'],
+		'lastname' => $user['lastname'],
+		'owner' => true]);
 
 	Flight::json(['success' => true]);
 });

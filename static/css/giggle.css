@@ -1,3 +1,9 @@
+@import url(http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic&subset=latin,cyrillic);
+
+body, section {
+	font-family: 'PT Sans';
+}
+
 .container-fluid {
 	margin: 5% auto;
 	max-width: 90%;

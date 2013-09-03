@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+	    ['x',            'Yandex', 'Google'],
+	    ['2013-05-20',   23,       18],
+	    ['2013-05-21',   23,       16],
+	    ['2013-05-22',   21,       16],
+	    ['2013-05-23',   20,       16],
+	    ['2013-05-24',   20,       17]
+	]);
+
+        var options = {
+          title: 'Динамика позиций',
+          width: 400,
+          height: 400
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="chart_div" style="width: 400px; height: 400px;"></div>
+  </body>
+</html>

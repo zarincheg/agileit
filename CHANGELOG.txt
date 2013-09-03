@@ -1,0 +1,6 @@
+2013-09-03
+Fixed bugs:
+- Settings saving is incorrect worked with project name
+
+Features
+- Creating new projects

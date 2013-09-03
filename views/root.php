@@ -14,7 +14,7 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <span class="brand">Current project:</span>
+          <span class="brand">Agile It!</span>
           <a href="/settings" class="pull-right">
             <img src="/img/settings_1.png" class="img-circle" style="height: 30pt; width: 30pt;">
           </a>
@@ -38,7 +38,7 @@
                 <li class="<?= $current ?>" data-project-name="<?= $project['name'] ?>"><a href="/dashboard/select/<?= $project['name'] ?>"><?= $project['title'] ?></a></li>
                 <? } ?>
                 <li class="divider"></li>
-                <li><a href="#">New project</a></li>
+                <li><a href="/new">New project</a></li>
               </ul>
             </li>
           </ul>
