@@ -1,7 +1,7 @@
 <div class="container main">
   <div class="row-fluid">
     <div class="span9">
-      <form action="/stream/add" id="addNoteForm">
+      <form action="/stream/add" id="addProjectForm">
         <textarea name="note" class="stream" rows="8"></textarea>
         <button class="btn btn-inverse" type="submit">Send</button>
       </form>

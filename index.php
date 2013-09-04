@@ -291,8 +291,8 @@ Flight::route('POST /new', function() {
 	$user = Flight::get('user');
 
 	$user['projects'][] = [
-		'name' => $_POST['name'],
-		'title' => $_POST['title'],
+		'name' => Flight::translit($_POST['name']),
+		'title' => $_POST['name'],
 		'owner' => true
 	];
 
