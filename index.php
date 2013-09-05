@@ -39,7 +39,7 @@ Flight::map('translit', function($str) {
         "м"=>"m","н"=>"n","о"=>"o","п"=>"p","р"=>"r",
         "с"=>"s","т"=>"t","у"=>"u","ф"=>"f","х"=>"h",
         "ц"=>"ts","ч"=>"ch","ш"=>"sh","щ"=>"sch","ъ"=>"y",
-        "ы"=>"yi","ь"=>"","э"=>"e","ю"=>"yu","я"=>"ya", " " => "-"
+        "ы"=>"yi","ь"=>"","э"=>"e","ю"=>"yu","я"=>"ya", " " => "-", "." => "-"
     );
     return strtr($str, $tr);
 });
@@ -291,7 +291,7 @@ Flight::route('POST /new', function() {
 	$user = Flight::get('user');
 
 	$user['projects'][] = [
-		'name' => Flight::translit($_POST['name']),
+		'name' => strtolower(Flight::translit($_POST['name'])),
 		'title' => $_POST['name'],
 		'owner' => true
 	];
