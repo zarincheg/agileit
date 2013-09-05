@@ -54,7 +54,7 @@ div.li-after {
 textarea.details {
 	display: block;
 	margin-top: 5pt;
-	width: 291pt;
+	width: 318pt;
 }
 
 textarea.stream {
@@ -118,6 +118,55 @@ div.task-labels {
 	cursor: pointer;
 }
 
-ul.branch-list li {
-	padding-bottom: 5pt;
+.branch-acts span {
+	cursor: pointer;
+}
+
+.slim-badge {
+	border-left: 3pt solid;
+	padding-left: 3pt;
+}
+
+#feature-list .slim-badge {
+	border-left-width: 5pt;
+}
+
+.slim-badge-info {
+	border-left-color: #3a87ad;
+}
+
+.slim-badge-important, .slim-badge-open {
+	border-left-color: #b94a48;
+}
+
+.slim-badge-warning {
+	border-left-color: #f89406;
+}
+
+.slim-badge-success, .slim-badge-close {
+	border-left-color: #68aa69;
+}
+
+.branch-list .slim-badge, #feature-list .slim-badge {
+	margin-top: 5pt;
+}
+
+#feature-list li a, #bug-list li a {
+	padding-left: 5pt;
+}
+
+.task-list-header {
+	width: 328pt;
+	height: 40pt;
+	margin: 10pt 0 10pt 0;
+	vertical-align: middle;
+	line-height: 40pt;
+	font-size: 28pt;
+	text-align: center;
+	color: #fff;
+	background-color: #00aba9;
+}
+
+.bugs-list-header {
+	background-color: #b91d47;
 }

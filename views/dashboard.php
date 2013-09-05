@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span6">
-      <h2>Bugs</h2>
+	  <div class="task-list-header bugs-list-header">Bugs</div>
       <div class="input-append">
       <form id="addBugForm">
         <input class="input-xlarge" id="appendedInputButtons" type="text" name="name">
@@ -12,17 +12,17 @@
         </div>
       </form>
       </div>
-      <ol class="wide-item" id="bug-list">
+      <ol class="wide-item unstyled" id="bug-list">
         <? foreach($bugs as $bug) { ?>
         <li>
+	      <span class="badge badge-<?= $bug['status'] ?>"><?= $bug['status'] ?></span>
           <a href="/task/<?= $bug['_id'] ?>"><?= $bug['name'] ?></a>
-          <span class="badge badge-<?= $bug['status'] ?>"><?= $bug['status'] ?></span>
         </li>
         <? } ?>
       </ol>
     </div>
     <div class="span6">
-      <h2>Features</h2>
+      <div class="task-list-header">Features</div>
       <div class="input-append">
       <form id="addFeatureForm">
           <input class="input-xlarge" id="appendedInputButtons" type="text" name="name">
@@ -33,11 +33,11 @@
           </div>
       </form>
       </div>
-      <ol class="wide-item" id="feature-list">
+      <ol class="wide-item unstyled" id="feature-list">
         <? foreach($features as $feature) { ?>
-        <li>
+        <li class="slim-badge slim-badge-<?= $feature['status'] ?>">
+	      <!--<span class="badge badge-<?/*= $feature['status'] */?>"><?/*= $feature['status'] */?></span>-->
           <a href="/task/<?= $feature['_id'] ?>"><?= $feature['name'] ?></a>
-          <span class="badge badge-<?= $feature['status'] ?>"><?= $feature['status'] ?></span>
         </li>
         <? } ?>
       </ol>
@@ -47,8 +47,8 @@
 
 <script type="text/template" id="task-item">
   <li>
+	<span class="badge badge-important">open</span>
     <a href="#"></a>
-    <span class="badge badge-important">open</span>
   </li>
 </script>
 
