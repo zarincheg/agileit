@@ -1,7 +1,7 @@
 <?
 $badge = function($status) {
   $badges = ['review' => 'info',
-             'fix' => 'important',
+             'fixing' => 'important',
              'testing' => 'warning',
              'complete' => 'success'];
   return $badges[$status];
@@ -21,16 +21,16 @@ $badge = function($status) {
             </ul>
             <div class="tab-content state-content">
               <div class="tab-pane" id="tab5">
-                <ul class="unstyled wide-item branch-list">
+                <ul class="unstyled branch-list">
                   <? foreach($list as $branch) { ?>
-                  <li>
-                    <div class="badge-empty badge-<?= $badge($branch['status']) ?> li-before"></div>
+                  <li class="slim-badge slim-badge-<?= $badge($branch['status']) ?>">
+                    <!--<div class="badge-empty badge-<?/*= $badge($branch['status']) */?> li-before"></div>-->
                     <a data-toggle="collapse" href="#branch-acts-<?= $branch['name'] ?>"><?= $branch['name'] ?></a>
                     | taskName, Kirill Zorin
-                    <div id="branch-acts-<?= $branch['name'] ?>" class="collapse">
-                      <span class="label label-warning">Testing</span>
-                      <span class="label label-important">Fix</span>
-                      <span class="label label-info">Review</span>
+                    <div id="branch-acts-<?= $branch['name'] ?>" class="collapse branch-acts">
+                      <span class="label label-warning" onclick="setStatus('<?= $branch['name'] ?>', 'testing')">Testing</span>
+                      <span class="label label-important" onclick="setStatus('<?= $branch['name'] ?>', 'fixing')">Fixing</span>
+                      <span class="label label-info" onclick="setStatus('<?= $branch['name'] ?>', 'review')">Review</span>
                     </div>
                   </li>
                   <? } ?>
@@ -43,9 +43,9 @@ $badge = function($status) {
                   <li> 
                     <a data-toggle="collapse" href="#branch-rwacts-<?= $branch['name'] ?>"><?= $branch['name'] ?></a>
                     | taskName, Kirill Zorin
-                    <div id="branch-rwacts-<?= $branch['name'] ?>" class="collapse">
-                      <span class="label label-warning">Testing</span>
-                      <span class="label label-important">Fix</span>
+                    <div id="branch-rwacts-<?= $branch['name'] ?>" class="collapse branch-acts">
+                      <span class="label label-warning" onclick="setStatus('<?= $branch['name'] ?>', 'testing')">Testing</span>
+                      <span class="label label-important" onclick="setStatus('<?= $branch['name'] ?>', 'fixing')">Fixing</span>
                     </div>
                   </li>
                   <? } ?>
@@ -56,17 +56,17 @@ $badge = function($status) {
                 <div class="row-fluid">
                   <div class="span6">
                     Merged
-                    <ul class="wide-item unstyled branch-list">
+                    <ul class="unstyled branch-list">
                       <? foreach($bugList as $branch) { 
                         if(!in_array('fix-testing', $branch['merged'])) continue; ?>
-                      <li>
+                      <li class="slim-badge slim-badge-<?= $badge($branch['status']) ?>">
                         <a data-toggle="collapse" href="#branch-fxacts-<?= $branch['name'] ?>"><?= $branch['name'] ?></a>
                         | taskName, Kirill Zorin
-                        <div id="branch-fxacts-<?= $branch['name'] ?>" class="collapse">
-                          <span class="label label-success">Complete</span>
-                          <span class="label label-warning">Testing</span>
-                          <span class="label label-important">Fix</span>
-                          <span class="label label-info">Review</span>
+                        <div id="branch-fxacts-<?= $branch['name'] ?>" class="collapse branch-acts">
+                          <span class="label label-success" onclick="setStatus('<?= $branch['name'] ?>', 'complete')">Complete</span>
+                          <span class="label label-warning" onclick="setStatus('<?= $branch['name'] ?>', 'testing')">Testing</span>
+                          <span class="label label-important" onclick="setStatus('<?= $branch['name'] ?>', 'fixing')">Fixing</span>
+                          <span class="label label-info" onclick="setStatus('<?= $branch['name'] ?>', 'review')">Review</span>
                         </div>
                       </li>
                       <? } ?>
@@ -74,17 +74,17 @@ $badge = function($status) {
                   </div>
                   <div class="span6">
                     Not merged
-                    <ul class="wide-item unstyled branch-list">
+                    <ul class="unstyled branch-list">
                       <? foreach($bugList as $branch) { 
                         if(in_array('fix-testing', $branch['merged'])) continue; ?>
-                      <li>
+                      <li class="slim-badge slim-badge-<?= $badge($branch['status']) ?>">
                         <a data-toggle="collapse" href="#branch-fxacts-<?= $branch['name'] ?>"><?= $branch['name'] ?></a>
                         | taskName, Kirill Zorin
-                        <div id="branch-fxacts-<?= $branch['name'] ?>" class="collapse">
-                          <span class="label label-success">Complete</span>
-                          <span class="label label-warning">Testing</span>
-                          <span class="label label-important">Fix</span>
-                          <span class="label label-info">Review</span>
+                        <div id="branch-fxacts-<?= $branch['name'] ?>" class="collapse branch-acts">
+                          <span class="label label-success" onclick="setStatus('<?= $branch['name'] ?>', 'complete')">Complete</span>
+                          <span class="label label-warning" onclick="setStatus('<?= $branch['name'] ?>', 'testing')">Testing</span>
+                          <span class="label label-important" onclick="setStatus('<?= $branch['name'] ?>', 'fixing')">Fixing</span>
+                          <span class="label label-info" onclick="setStatus('<?= $branch['name'] ?>', 'review')">Review</span>
                         </div>
                       </li>
                       <? } ?>
@@ -97,17 +97,17 @@ $badge = function($status) {
                 <div class="row-fluid">
                   <div class="span6">
                     Merged
-                    <ul class="wide-item unstyled branch-list">
+                    <ul class="unstyled branch-list">
                       <? foreach($featureList as $branch) { 
                         if(!in_array('feature-testing', $branch['merged'])) continue; ?>
-                      <li>
+                      <li class="slim-badge slim-badge-<?= $badge($branch['status']) ?>">
                         <a data-toggle="collapse" href="#branch-ftacts-<?= $branch['name'] ?>"><?= $branch['name'] ?></a>
                         | taskName, Kirill Zorin
-                        <div id="branch-ftacts-<?= $branch['name'] ?>" class="collapse">
-                          <span class="label label-success">Complete</span>
-                          <span class="label label-warning">Testing</span>
-                          <span class="label label-important">Fix</span>
-                          <span class="label label-info">Review</span>
+                        <div id="branch-ftacts-<?= $branch['name'] ?>" class="collapse branch-acts">
+                          <span class="label label-success" onclick="setStatus('<?= $branch['name'] ?>', 'complete')">Complete</span>
+                          <span class="label label-warning" onclick="setStatus('<?= $branch['name'] ?>', 'testing')">Testing</span>
+                          <span class="label label-important" onclick="setStatus('<?= $branch['name'] ?>', 'fixing')">Fixing</span>
+                          <span class="label label-info" onclick="setStatus('<?= $branch['name'] ?>', 'review')">Review</span>
                         </div>
                       </li>
                       <? } ?>
@@ -115,17 +115,17 @@ $badge = function($status) {
                   </div>
                   <div class="span6">
                     Not merged
-                    <ul class="wide-item unstyled branch-list">
+                    <ul class="unstyled branch-list">
                       <? foreach($featureList as $branch) { 
                         if(in_array('feature-testing', $branch['merged'])) continue; ?>
-                      <li>
+                      <li class="slim-badge slim-badge-<?= $badge($branch['status']) ?>">
                         <a data-toggle="collapse" href="#branch-ftacts-<?= $branch['name'] ?>"><?= $branch['name'] ?></a>
                         | taskName, Kirill Zorin
-                        <div id="branch-ftacts-<?= $branch['name'] ?>" class="collapse">
-                          <span class="label label-success">Complete</span>
-                          <span class="label label-warning">Testing</span>
-                          <span class="label label-important">Fix</span>
-                          <span class="label label-info">Review</span>
+                        <div id="branch-ftacts-<?= $branch['name'] ?>" class="collapse branch-acts">
+                          <span class="label label-success" onclick="setStatus('<?= $branch['name'] ?>', 'complete')">Complete</span>
+                          <span class="label label-warning" onclick="setStatus('<?= $branch['name'] ?>', 'testing')">Testing</span>
+                          <span class="label label-important" onclick="setStatus('<?= $branch['name'] ?>', 'fixing')">Fixing</span>
+                          <span class="label label-info" onclick="setStatus('<?= $branch['name'] ?>', 'review')">Review</span>
                         </div>
                       </li>
                       <? } ?>
@@ -236,3 +236,5 @@ $badge = function($status) {
         <a href="#" class="btn btn-inverse"><i class="icon-plus icon-white"></i> Add</a>
       </div>
     </div>
+
+<script src="/static/js/branches.js"></script>

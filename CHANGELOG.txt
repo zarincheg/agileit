@@ -4,7 +4,12 @@ Fixed bugs:
 - Tasks with filename's in names handled incorrectly
 - In the script of the Git import added argument for select project
 - Was not added information about the merges
+- Minor fixes
 
+Features
+- Branch statuses can changed now
+
+============================
 2013-09-04
 Features:
 - Form for adding projects

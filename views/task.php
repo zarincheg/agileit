@@ -21,7 +21,7 @@
         </div>
       </div>
       <h4><?= $name ?></h4>
-      <p><?= $details ?></p>
+      <p><?= str_replace("\n", "<br>", $details); ?></p>
       <div class="task-labels">
         <span class="label label-info">Branch</span>
         <span class="label label-inverse">Kirill Zorin</span>

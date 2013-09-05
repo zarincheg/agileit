@@ -209,6 +209,14 @@ Flight::route('GET /branches', function() {
 	Flight::render('root');
 });
 
+Flight::route('POST /branch/@name/status/@status', function($name, $status) {
+	$db = Flight::projectdb(Flight::get('currentProject'));
+	$db->branches->update(['name' => $name],
+						  ['$set' => ['status' => $status]]);
+
+	Flight::json(['success' => true]);
+});
+
 Flight::route('GET /backlog', function() {
 	$db = Flight::projectdb(Flight::get('currentProject'));
 	$backlog = $db->backlog->find()->sort(['rating' => -1]);
