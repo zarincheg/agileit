@@ -1,6 +1,18 @@
+2013-09-05
+Fixed bugs:
+- Create projects db with name in lowercase
+- Tasks with filename's in names handled incorrectly
+- In the script of the Git import added argument for select project
+- Was not added information about the merges
+
+2013-09-04
+Features:
+- Form for adding projects
+
+============================
 2013-09-03
 Fixed bugs:
 - Settings saving is incorrect worked with project name
 
-Features
+Features:
 - Creating new projects

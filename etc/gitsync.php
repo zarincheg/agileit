@@ -1,10 +1,14 @@
 <?php
 include 'Git.php';
 
+/**
+ * $argv[1] - Project name
+ */
+
 $mongo = new MongoClient();
-$db = $mongo->selectDB('agilit');
-$settings = $db->settings->findOne(['project' => '35cm']);
-$git = new Git('35cm', $settings['repoPath'], $settings['clonePath']); // @todo Из mongo->agilit->settings
+$db = $mongo->selectDB($argv[1]);
+$settings = $db->settings->findOne(['project' => $argv[1]]);
+$git = new Git($argv[1], $settings['repoPath'], $settings['clonePath']); // @todo Из mongo->agilit->settings
 
 if(!$git->isRepo()) {
 	$git->load();
@@ -24,9 +28,13 @@ while($exists->hasNext()) {
 $diff = array_diff($branches, $list);
 
 foreach ($diff as $b) {
+	preg_match("!^([0-9a-z_]+)\-!ui", $b, $m);
+	$branchType = isset($m[1]) ? $m[1] : 'common';
+
 	$db->branches->insert(['name' => $b,
-						   'type' => 'common', // @todo Определять тип по префиксу имени: patch, feature, etc
-						   'status' => 'review']);
+						   'type' => $branchType,
+						   'status' => 'review',
+						   'merged' => []]);
 }
 
 $diff = array_diff($list, $branches);
