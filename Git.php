@@ -8,32 +8,37 @@ class Git {
 	public function __construct($name, $repoPath, $clonePath) {
 		$this->repo = $repoPath;
 		$this->name = $name;
-		$this->clonePath = $clonePath.'/'.$name;
+		$this->clonePath = $clonePath;
 	}
 
 	public function load() {
-		if(!file_exists($this->clonePath))
-			mkdir($this->clonePath);
+		if(!file_exists($this->clonePath)) {
+			echo("Clone path doesn't exists:".$this->clonePath."\n");
+			exit(0);
+		}
 
-		`git clone $this->repo $this->clonePath`;
+		if(!file_exists($this->clonePath.'/'.$this->name))
+			mkdir($this->clonePath.'/'.$this->name);
+
+		return `git clone $this->repo $this->clonePath.'/'.$this->name`;
 	}
 
 	public function fetch() {
-		$output = shell_exec("cd $this->clonePath && git fetch -p");
+		$output = shell_exec("cd $this->clonePath.'/'.$this->name && git fetch -p");
 		preg_match_all('!\[new branch\]\s+([a-zA-Z0-9_\-]+)\s!i', $output, $branches);
 
 		return $branches[1];
 	}
 
 	public function branch() {
-		$output = shell_exec("cd $this->clonePath && git branch -r");
+		$output = shell_exec("cd $this->clonePath.'/'.$this->name && git branch -r");
 		preg_match_all('!origin/([a-zA-Z0-9_\-]+)\n?!i', $output, $branches);
 
 		return $branches[1];
 	}
 
 	public function isRepo() {
-		if(file_exists($this->clonePath.'/.git'))
+		if(file_exists($this->clonePath.'/'.$this->name.'/.git'))
 			return true;
 		else
 			return false;

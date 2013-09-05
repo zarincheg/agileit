@@ -11,8 +11,10 @@ $settings = $db->settings->findOne(['project' => $argv[1]]);
 $git = new Git($argv[1], $settings['repoPath'], $settings['clonePath']); // @todo Из mongo->agilit->settings
 
 if(!$git->isRepo()) {
+	echo "Cloning repository...\n";
 	$git->load();
 } else {
+	echo "Fetching repository...\n";
 	$git->fetch();
 }
 
