@@ -21,10 +21,10 @@ $badge = function($status) {
             </ul>
             <div class="tab-content state-content">
               <div class="tab-pane" id="tab5">
-                <ul class="unstyled branch-list">
+                <ul class="wide-item unstyled branch-list">
                   <? foreach($list as $branch) { ?>
-                  <li class="slim-badge slim-badge-<?= $badge($branch['status']) ?>">
-                    <!--<div class="badge-empty badge-<?/*= $badge($branch['status']) */?> li-before"></div>-->
+                  <li>
+	                <div class="square-badge status-<?= $branch['status'] ?>"></div>
                     <a data-toggle="collapse" href="#branch-acts-<?= $branch['name'] ?>"><?= $branch['name'] ?></a>
                     | taskName, Kirill Zorin
                     <div id="branch-acts-<?= $branch['name'] ?>" class="collapse branch-acts">
@@ -40,7 +40,7 @@ $badge = function($status) {
               <div class="tab-pane active" id="tab1">
                 <ul class="wide-item unstyled branch-list">
                   <? foreach($reviewList as $branch) { ?>
-                  <li> 
+                  <li>
                     <a data-toggle="collapse" href="#branch-rwacts-<?= $branch['name'] ?>"><?= $branch['name'] ?></a>
                     | taskName, Kirill Zorin
                     <div id="branch-rwacts-<?= $branch['name'] ?>" class="collapse branch-acts">
@@ -56,10 +56,11 @@ $badge = function($status) {
                 <div class="row-fluid">
                   <div class="span6">
                     Merged
-                    <ul class="unstyled branch-list">
+                    <ul class="wide-item unstyled branch-list">
                       <? foreach($bugList as $branch) { 
                         if(!in_array('fix-testing', $branch['merged'])) continue; ?>
-                      <li class="slim-badge slim-badge-<?= $badge($branch['status']) ?>">
+                      <li>
+	                    <div class="square-badge status-<?= $branch['status'] ?>"></div>
                         <a data-toggle="collapse" href="#branch-fxacts-<?= $branch['name'] ?>"><?= $branch['name'] ?></a>
                         | taskName, Kirill Zorin
                         <div id="branch-fxacts-<?= $branch['name'] ?>" class="collapse branch-acts">
@@ -74,10 +75,11 @@ $badge = function($status) {
                   </div>
                   <div class="span6">
                     Not merged
-                    <ul class="unstyled branch-list">
+                    <ul class="wide-item unstyled branch-list">
                       <? foreach($bugList as $branch) { 
                         if(in_array('fix-testing', $branch['merged'])) continue; ?>
-                      <li class="slim-badge slim-badge-<?= $badge($branch['status']) ?>">
+                      <li>
+	                    <div class="square-badge status-<?= $branch['status'] ?>"></div>
                         <a data-toggle="collapse" href="#branch-fxacts-<?= $branch['name'] ?>"><?= $branch['name'] ?></a>
                         | taskName, Kirill Zorin
                         <div id="branch-fxacts-<?= $branch['name'] ?>" class="collapse branch-acts">
@@ -97,10 +99,11 @@ $badge = function($status) {
                 <div class="row-fluid">
                   <div class="span6">
                     Merged
-                    <ul class="unstyled branch-list">
+                    <ul class="wide-item unstyled branch-list">
                       <? foreach($featureList as $branch) { 
                         if(!in_array('feature-testing', $branch['merged'])) continue; ?>
-                      <li class="slim-badge slim-badge-<?= $badge($branch['status']) ?>">
+                      <li>
+	                    <div class="square-badge status-<?= $branch['status'] ?>"></div>
                         <a data-toggle="collapse" href="#branch-ftacts-<?= $branch['name'] ?>"><?= $branch['name'] ?></a>
                         | taskName, Kirill Zorin
                         <div id="branch-ftacts-<?= $branch['name'] ?>" class="collapse branch-acts">
@@ -115,10 +118,11 @@ $badge = function($status) {
                   </div>
                   <div class="span6">
                     Not merged
-                    <ul class="unstyled branch-list">
+                    <ul class="wide-item unstyled branch-list">
                       <? foreach($featureList as $branch) { 
                         if(in_array('feature-testing', $branch['merged'])) continue; ?>
-                      <li class="slim-badge slim-badge-<?= $badge($branch['status']) ?>">
+                      <li>
+	                    <div class="square-badge status-<?= $branch['status'] ?>"></div>
                         <a data-toggle="collapse" href="#branch-ftacts-<?= $branch['name'] ?>"><?= $branch['name'] ?></a>
                         | taskName, Kirill Zorin
                         <div id="branch-ftacts-<?= $branch['name'] ?>" class="collapse branch-acts">

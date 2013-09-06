@@ -1,7 +1,11 @@
 @import url(http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic&subset=latin,cyrillic);
 
-body, section {
+body, section, .btn {
 	font-family: 'PT Sans';
+	border-radius: 0;
+
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
 }
 
 .container-fluid {
@@ -34,15 +38,6 @@ form.new-build select.input-xlarge {
 	height: 220pt;
 }
 
-div.badge-empty {
-	display: inline;
-	padding-right: 9px;
-	  padding-left: 7px;
-	  -webkit-border-radius: 9px;
-	     -moz-border-radius: 9px;
-	          border-radius: 9px;
-}
-
 div.li-before {
 	margin-right: 3pt;
 }
@@ -54,7 +49,8 @@ div.li-after {
 textarea.details {
 	display: block;
 	margin-top: 5pt;
-	width: 318pt;
+	width: 100%;
+	border: 1px solid #ccc;
 }
 
 textarea.stream {
@@ -122,41 +118,16 @@ div.task-labels {
 	cursor: pointer;
 }
 
-.slim-badge {
-	border-left: 3pt solid;
-	padding-left: 3pt;
-}
-
-#feature-list .slim-badge {
-	border-left-width: 5pt;
-}
-
-.slim-badge-info {
-	border-left-color: #3a87ad;
-}
-
-.slim-badge-important, .slim-badge-open {
-	border-left-color: #b94a48;
-}
-
-.slim-badge-warning {
-	border-left-color: #f89406;
-}
-
-.slim-badge-success, .slim-badge-close {
-	border-left-color: #68aa69;
-}
-
 .branch-list .slim-badge, #feature-list .slim-badge {
 	margin-top: 5pt;
 }
 
-#feature-list li a, #bug-list li a {
+#feature-list li a, #bug-list li a, .branch-list li a {
 	padding-left: 5pt;
 }
 
 .task-list-header {
-	width: 328pt;
+	width: 100%;
 	height: 40pt;
 	margin: 10pt 0 10pt 0;
 	vertical-align: middle;
@@ -169,4 +140,58 @@ div.task-labels {
 
 .bugs-list-header {
 	background-color: #b91d47;
+}
+
+.square-badge {
+	float:left;
+	width: 15px;
+	height: 15px;
+	background-color: #b94a48;
+	margin-top: 2pt;
+}
+
+.status-open, { background-color: #da532c; }
+.status-close { background-color: #00a300; }
+.status-review { background-color: #2d89ef; }
+.status-testing { background-color: #ffc40d; }
+.status-complete { background-color: #00a300; }
+.status-fixing { background-color: #b91d47;}
+
+.status-icon-open:before {
+	content: "\1f525";
+	color: #da532c;
+}
+
+.status-icon-close:before {
+	content:"\e013";
+	color: #00a300;
+}
+
+.btn-success {
+	background-color: #00a300;
+	border-color: #00a300;
+}
+
+.btn-success:hover {
+	background-color: #009200;
+	border-color: #009200;
+}
+
+.btn-default {
+	background-color: #dee3ee;
+	border-color: #dee3ee;
+}
+
+.btn-default:hover {
+	background-color: #cdd2dd;
+	border-color: #cdd2dd;
+}
+
+ol.unstyled, ul.unstyled {
+	list-style: none;
+	padding: 0;
+}
+
+#feature-list, #bug-list {
+	margin-top: 15pt;
 }
