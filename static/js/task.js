@@ -56,4 +56,35 @@ function statusHandler() {
 
 $(function() {
 	$('#task-actions>button:nth-child(1)').click(statusHandler);
+	$('button').popover();
+
+	$('#comment-btn').on('shown.bs.popover', function () {
+		$('#comment-btn>span').toggleClass('glyphicon-comment').toggleClass('glyphicon-floppy-save');
+		$('div.popover').css({"left": '70pt', "max-width": '500pt'});
+		$('div.popover>div.arrow').css({"left": '40pt'});
+		$('div.popover-content').html('<textarea class="stream" rows="5" style="width: 400pt;border:1pt solid #ccc;"></textarea>');
+	});
+
+	$('#comment-btn').on('hidden.bs.popover', function () {
+		$('#comment-btn>span').toggleClass('glyphicon-comment').toggleClass('glyphicon-floppy-save');
+	});
+
+	$('#branch-btn').on('shown.bs.popover', function () {
+		$('#branch-btn>span')
+			.toggleClass('octicon')
+			.toggleClass('glyphicon')
+			.toggleClass('octicon-git-branch')
+			.toggleClass('glyphicon-floppy-save');
+		$('div.popover').css({"left": '115pt', "max-width": '500pt'});
+		$('div.popover>div.arrow').css({"left": '40pt'});
+		$('div.popover-content').html('<input type="text" class="form-control" placeholder="Enter a branch name" style="width: 400pt;border:1pt solid #ccc;"></textarea>');
+	});
+
+	$('#branch-btn').on('hidden.bs.popover', function () {
+		$('#branch-btn>span')
+			.toggleClass('octicon')
+			.toggleClass('glyphicon')
+			.toggleClass('octicon-git-branch')
+			.toggleClass('glyphicon-floppy-save');
+	});
 });
